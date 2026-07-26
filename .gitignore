@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+secrets/
+.DS_Store
+.vscode/
+.idea/
+logs/
+*.db
+*.sqlite
+.commit_count
+.ai_state
