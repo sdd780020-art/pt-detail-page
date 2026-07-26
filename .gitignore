@@ -13,3 +13,7 @@ logs/
 *.sqlite
 .commit_count
 .ai_state
+
+# 내부 데이터/레퍼런스 (개인정보·대용량 — 커밋 금지)
+PT수업수_리포트_트레이너회원_상위50.html
+Teambutfit3.0 Landing Page (1).html
