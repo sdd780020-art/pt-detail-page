@@ -141,10 +141,9 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   font-feature-settings: "tnum" 1;
 }
 .step-head__name {
-  font-size: 13px; font-weight: 800;
-  color: var(--brand); letter-spacing: 2.5px;
-  text-transform: uppercase;
-  align-self: flex-end; padding-bottom: 8px;
+  font-size: clamp(19px, 2.6vw, 26px); font-weight: 800;
+  color: var(--brand); letter-spacing: -.5px;
+  align-self: flex-end; padding-bottom: 9px;
 }
 
 .lead {
@@ -278,8 +277,9 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   padding: 96px var(--sp-lg) var(--sp-4xl);
   overflow: hidden;
 }
-.hero__bg { position: absolute; inset: 0; z-index: 0; }
-.hero__bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; animation: heroZoom 7s ease-out both; }
+@keyframes heroZoom { from { transform: scale(1.07); } to { transform: scale(1); } }
 .hero__bg::after {
   content: ""; position: absolute; inset: 0;
   background:
@@ -287,6 +287,16 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
     radial-gradient(70% 50% at 80% 8%, rgba(0,216,87,.16) 0%, transparent 60%);
 }
 .hero__text { position: relative; z-index: 1; max-width: 920px; }
+/* 히어로 로드 시퀀스 — 요소별 순차 등장 */
+.hero__text > * { opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) forwards; }
+.hero__text > *:nth-child(1) { animation-delay: .08s; }
+.hero__text > *:nth-child(2) { animation-delay: .2s; }
+.hero__text > *:nth-child(3) { animation-delay: .32s; }
+.hero__text > *:nth-child(4) { animation-delay: .46s; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
 .hero__eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,.72); text-transform: uppercase; margin-bottom: var(--sp-lg); }
 .hero__kicker { font-size: clamp(15px, 2vw, 19px); font-weight: 600; color: var(--brand); margin-bottom: var(--sp-md); letter-spacing: -0.3px; }
 .hero__title {
@@ -522,12 +532,20 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   background: var(--surface-2); border: 1px solid var(--border);
   border-radius: var(--r-xl); padding: var(--sp-2xl); width: 100%;
 }
-.report__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-lg); margin-bottom: var(--sp-lg); }
-.metric__label { font-size: 12px; color: var(--text-sub); margin-bottom: 6px; font-weight: 600; }
-.metric__track { height: 8px; background: var(--surface-3); border-radius: var(--r-pill); overflow: hidden; margin-bottom: 6px; }
-.metric__fill { height: 100%; background: linear-gradient(90deg, var(--brand-dark), var(--brand)); border-radius: var(--r-pill); }
-.metric__val { font-size: 14px; font-weight: 800; color: var(--text); }
-.metric__val span { color: var(--text-caption); font-weight: 500; font-size: 12px; margin-left: 4px; }
+.report__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-md); margin-bottom: var(--sp-lg); }
+/* 스탯 타일 — 임의 폭 게이지 대신 수치+방향만 (정직한 표기) */
+.mtile {
+  background: var(--surface-3); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--sp-base) var(--sp-lg);
+}
+.mtile__label { font-size: 12px; color: var(--text-sub); font-weight: 600; }
+.mtile__val {
+  display: flex; align-items: baseline; gap: 6px;
+  font-size: clamp(19px, 2.6vw, 24px); font-weight: 800; color: var(--text);
+  font-feature-settings: "tnum" 1; margin-top: 5px; letter-spacing: -.5px;
+}
+.mtile__dir { font-size: 13px; color: var(--brand); font-weight: 800; }
+.mtile__cap { font-size: 11px; color: var(--text-caption); margin-top: 3px; }
 
 /* Before/After */
 .ba { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); margin-top: var(--sp-xl); }
@@ -615,9 +633,24 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .dash__legend { display: flex; gap: var(--sp-md); }
 .dash__lg { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--text-sub); font-weight: 600; }
 .dash__lg i { width: 10px; height: 3px; border-radius: 2px; display: inline-block; }
-.dash__chart svg { width: 100%; height: auto; display: block; }
-.dash__foot { display: flex; justify-content: space-between; margin-top: var(--sp-md); }
+.dash__chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.dash__foot { display: flex; justify-content: space-between; margin-top: var(--sp-sm); padding: 0 2px; }
 .dash__foot span { font-size: 11px; color: var(--text-caption); font-weight: 600; }
+/* 헤드라인 지표 (차트 위 큰 수치) */
+.dash__hero { display: flex; align-items: baseline; gap: var(--sp-sm); margin-bottom: var(--sp-lg); }
+.dash__hero b { font-size: clamp(30px, 5vw, 44px); font-weight: 800; color: var(--brand); letter-spacing: -1.5px; line-height: 1; font-feature-settings: "tnum" 1; }
+.dash__hero small { font-size: 13px; color: var(--text-sub); font-weight: 600; }
+/* 라인 그리기 애니메이션 */
+.dash__line { stroke-dasharray: 900; stroke-dashoffset: 900; }
+.dash__area, .dash__pt, .dash__callout { opacity: 0; }
+.reveal.is-visible .dash__line { stroke-dashoffset: 0; transition: stroke-dashoffset 1.9s cubic-bezier(.22,1,.36,1); }
+.reveal.is-visible .dash__area { opacity: 1; transition: opacity 1s ease .3s; }
+.reveal.is-visible .dash__pt { opacity: 1; transition: opacity .5s ease 1.6s; }
+.reveal.is-visible .dash__callout { opacity: 1; transition: opacity .5s ease 1.9s; }
+@media (prefers-reduced-motion: reduce) {
+  .dash__line { stroke-dashoffset: 0; }
+  .dash__area, .dash__pt, .dash__callout { opacity: 1; }
+}
 
 /* ==========================================================================
    Value bundle (PT 하나에 포함되는 것 · rapidcoach 번들 프레이밍)
@@ -864,8 +897,24 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
    ========================================================================== */
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* 리빌 내부 자식 스태거 (스텝·칩·트레이너 카드) */
+.js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer {
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .55s ease, transform .55s ease;
+}
+.js .reveal.is-visible .step, .js .reveal.is-visible .proof__chip, .js .reveal.is-visible .trainer {
+  opacity: 1; transform: none;
+}
+.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .proof__chip:nth-child(2), .js .reveal.is-visible .trainer:nth-child(2) { transition-delay: .08s; }
+.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .proof__chip:nth-child(3), .js .reveal.is-visible .trainer:nth-child(3) { transition-delay: .16s; }
+.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .trainer:nth-child(4) { transition-delay: .24s; }
+.js .reveal.is-visible .trainer:nth-child(5) { transition-delay: .32s; }
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
+  .js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer { opacity: 1; transform: none; transition: none; }
+  .hero__text > * { animation: none; opacity: 1; }
+  .hero__bg img { animation: none; }
   .hero__scroll i { animation: none; opacity: .5; }
   html { scroll-behavior: auto; }
 }
