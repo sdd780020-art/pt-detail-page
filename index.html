@@ -310,40 +310,28 @@
     <div class="reveal" style="margin-top:var(--sp-2xl)">
       <div class="dash">
         <div class="dash__hd">
-          <span class="dash__title">골격근량 추이</span>
-          <span class="dash__foot" style="margin:0;flex:0"><span>단위 · kg</span></span>
+          <span class="dash__title">내몸변화 추이</span>
+          <div class="dash__legend">
+            <span class="dash__lg"><i style="background:#00D857"></i>골격근량</span>
+            <span class="dash__lg"><i style="background:#A4A7B0"></i>체지방률</span>
+          </div>
         </div>
-        <div class="dash__hero"><b>+1.8<small style="font-size:.5em">kg</small></b><small>첫 측정 대비 · 24회 기준</small></div>
-        <div class="dash__chart">
-          <svg viewBox="0 0 640 210" role="img" aria-label="골격근량이 1회차부터 지금까지 꾸준히 상승하는 추이 그래프">
+        <div class="dash__chart" aria-hidden="true">
+          <svg viewBox="0 0 600 200" preserveAspectRatio="none" role="img">
             <defs>
               <linearGradient id="gArea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="rgba(0,216,87,.30)"/>
+                <stop offset="0%" stop-color="rgba(0,216,87,.28)"/>
                 <stop offset="100%" stop-color="rgba(0,216,87,0)"/>
               </linearGradient>
-              <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
             </defs>
-            <!-- grid -->
-            <line x1="8" y1="55" x2="632" y2="55" stroke="#26262E" stroke-width="1"/>
-            <line x1="8" y1="105" x2="632" y2="105" stroke="#26262E" stroke-width="1"/>
-            <line x1="8" y1="155" x2="632" y2="155" stroke="#26262E" stroke-width="1"/>
-            <!-- area -->
-            <path class="dash__area" d="M40,160 L188,138 L336,112 L484,82 L600,52 L600,180 L40,180 Z" fill="url(#gArea)"/>
-            <!-- line -->
-            <polyline class="dash__line" points="40,160 188,138 336,112 484,82 600,52" fill="none" stroke="#00D857" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- points -->
-            <g class="dash__pt">
-              <circle cx="40" cy="160" r="4" fill="#0D0D0E" stroke="#00D857" stroke-width="2.5"/>
-              <circle cx="188" cy="138" r="4" fill="#0D0D0E" stroke="#00D857" stroke-width="2.5"/>
-              <circle cx="336" cy="112" r="4" fill="#0D0D0E" stroke="#00D857" stroke-width="2.5"/>
-              <circle cx="484" cy="82" r="4" fill="#0D0D0E" stroke="#00D857" stroke-width="2.5"/>
-              <circle cx="600" cy="52" r="6.5" fill="#00D857" filter="url(#glow)"/>
-            </g>
-            <!-- end callout -->
-            <g class="dash__callout">
-              <rect x="516" y="18" width="86" height="26" rx="13" fill="#00D857"/>
-              <text x="559" y="35" text-anchor="middle" font-size="13" font-weight="800" fill="#06210F">지금 · 57.0</text>
-            </g>
+            <line x1="0" y1="50" x2="600" y2="50" stroke="#26262E" stroke-width="1"/>
+            <line x1="0" y1="100" x2="600" y2="100" stroke="#26262E" stroke-width="1"/>
+            <line x1="0" y1="150" x2="600" y2="150" stroke="#26262E" stroke-width="1"/>
+            <path d="M20,150 L160,138 L300,110 L440,82 L580,58 L580,190 L20,190 Z" fill="url(#gArea)"/>
+            <polyline points="20,150 160,138 300,110 440,82 580,58" fill="none" stroke="#00D857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="20,72 160,86 300,104 440,126 580,150" fill="none" stroke="#A4A7B0" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"/>
+            <circle cx="580" cy="58" r="5" fill="#00D857"/>
+            <circle cx="580" cy="150" r="4" fill="#A4A7B0"/>
           </svg>
         </div>
         <div class="dash__foot">
@@ -351,13 +339,15 @@
         </div>
       </div>
 
-      <div class="report__grid" style="margin-top:var(--sp-base)">
-        <div class="mtile"><p class="mtile__label">체지방률</p><p class="mtile__val">-3.2<span class="mtile__dir">%p ▼</span></p><p class="mtile__cap">8회 대비</p></div>
-        <div class="mtile"><p class="mtile__label">기초대사량</p><p class="mtile__val">+120<span class="mtile__dir">kcal ▲</span></p><p class="mtile__cap">8회 대비</p></div>
-        <div class="mtile"><p class="mtile__label">체형 밸런스</p><p class="mtile__val">개선<span class="mtile__dir">▲</span></p><p class="mtile__cap">좌우 균형</p></div>
-        <div class="mtile"><p class="mtile__label">허리둘레</p><p class="mtile__val">-4.0<span class="mtile__dir">cm ▼</span></p><p class="mtile__cap">8회 대비</p></div>
+      <div class="report" style="margin-top:var(--sp-base)">
+        <div class="report__grid">
+          <div><p class="metric__label">골격근량</p><div class="metric__track"><div class="metric__fill" style="width:68%"></div></div><p class="metric__val">+1.8kg <span>8회 대비</span></p></div>
+          <div><p class="metric__label">체지방률</p><div class="metric__track"><div class="metric__fill" style="width:42%"></div></div><p class="metric__val">-3.2% <span>8회 대비</span></p></div>
+          <div><p class="metric__label">기초대사량</p><div class="metric__track"><div class="metric__fill" style="width:75%"></div></div><p class="metric__val">+120kcal <span>8회 대비</span></p></div>
+          <div><p class="metric__label">체형 밸런스</p><div class="metric__track"><div class="metric__fill" style="width:60%"></div></div><p class="metric__val">개선 <span>좌우 균형</span></p></div>
+        </div>
+        <p class="caption">※ 2027 상반기 도입 예정 · 실제 데이터는 인바디·체형 검사 결과로 채워집니다.</p>
       </div>
-      <p class="caption" style="margin-top:var(--sp-md)">※ 2027 상반기 도입 예정 · 위 화면은 리포트 예시이며, 실제 데이터는 인바디·체형 검사 결과로 채워집니다.</p>
     </div>
   </div>
 </section>
