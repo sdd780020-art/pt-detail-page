@@ -420,14 +420,15 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 /* 세트를 두 번 이어붙이고 -50% 이동 → 이음매 없음.
    간격을 gap으로 주면 마지막 아이템 뒤 간격이 빠져 0.5칸씩 어긋나므로
    반드시 카드의 margin-right로 줄 것. */
+/* 속도는 '지속시간'이 아니라 '체감 픽셀속도' 기준으로 잡아야 함.
+   카드 4장(752px)/46s = 16px/s 였고, 요청대로 1.5배(약 24px/s).
+   1행 16장이면 세트 폭이 3008px이므로 3008/24.5 ≈ 120s. */
 .marquee__track {
   display: flex; width: max-content;
-  animation: mq 46s linear infinite;
+  animation: mq 120s linear infinite;
   will-change: transform;
 }
-.marquee__track--rev { animation-name: mq-rev; animation-duration: 54s; }
-@keyframes mq     { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
-@keyframes mq-rev { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
+@keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 
 /* --- 로스터 카드 --- */
@@ -453,6 +454,17 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .rc__name { font-size: clamp(21px, 2.6vw, 27px); font-weight: 800; line-height: 1; letter-spacing: -1.1px; }
 .rc__role { font-size: 12.5px; font-weight: 800; margin-top: 9px; }
 .rc__spec { font-size: 11.5px; font-weight: 600; opacity: .68; margin-top: 3px; line-height: 1.4; }
+
+/* 빈 슬롯 — 실존하지 않는 트레이너를 지어내지 않도록 이름 없는 스켈레톤으로만 */
+.rc--empty .rc__ph { background: rgba(6, 33, 15, .07); border-style: dashed; border-color: rgba(6, 33, 15, .3); }
+.rc--empty .rc__meta {
+  border-style: dashed; border-color: rgba(6, 33, 15, .3);
+  display: flex; flex-direction: column; gap: 7px;
+}
+.rc__bar { display: block; height: 9px; border-radius: 3px; background: rgba(6, 33, 15, .13); }
+.rc__bar--n { height: 16px; width: 62%; }
+.rc__bar--r { width: 38%; }
+.rc__bar--s { width: 52%; height: 8px; }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee__track { animation: none; }
@@ -783,6 +795,34 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .bundle-close .hl { color: var(--brand); }
 
 /* ==========================================================================
+   Statement — 짧은 문장을 크게 쌓아 문단 나열감 제거
+   작은 줄(부정) → 큰 줄(단정) 2연타로 리듬
+   ========================================================================== */
+.stmt { margin-top: var(--sp-3xl); }
+.stmt__sm {
+  font-size: clamp(15px, 2vw, 17px); font-weight: 600;
+  color: var(--text-caption); letter-spacing: -.3px;
+}
+.stmt__lg {
+  font-size: clamp(26px, 5.2vw, 44px); font-weight: 800;
+  color: var(--text); letter-spacing: -1.6px; line-height: 1.2;
+  margin-top: 2px;
+  text-wrap: balance;
+}
+.stmt__lg + .stmt__sm { margin-top: var(--sp-2xl); }
+.stmt__q {
+  margin-top: var(--sp-3xl); padding-top: var(--sp-xl);
+  border-top: 1px solid var(--border);
+  font-size: clamp(15px, 2vw, 17px); font-weight: 500;
+  color: var(--text-sub); line-height: 1.7;
+}
+.stmt__q strong {
+  display: inline-block; margin-top: 4px;
+  font-size: clamp(17px, 2.6vw, 21px); font-weight: 800;
+  color: var(--brand); letter-spacing: -.5px;
+}
+
+/* ==========================================================================
    4 STEP PT — 코인드 텀 앵커 락업 (teambutfit HYBRID TRAINING 패턴)
    작은 리드 → 초대형 텀 → 태그라인. 페이지 전체의 키메시지.
    ========================================================================== */
@@ -844,17 +884,31 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
    ========================================================================== */
 /* PT존 = 메인 피처, 나머지 = +α 서포팅 */
 .facility-feature { margin-top: var(--sp-2xl); }
+/* 모바일 3단 그리드에선 카드 폭이 ~96px라 오버레이 텍스트가 카드 밖으로 넘쳤음.
+   → 가로 스크롤 + 메타를 이미지 아래로 내려 근본 해결 (페이지의 기존 스크롤 패턴과 일치) */
 .facility-sub {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: var(--sp-base); margin-top: var(--sp-base);
+  display: flex; gap: var(--sp-md); margin-top: var(--sp-md);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: var(--sp-sm);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
+.facility-sub::-webkit-scrollbar { display: none; }
+.facility--sub { flex: 0 0 auto; width: 208px; scroll-snap-align: start; }
 .facility { position: relative; }
 .facility--main .figure { aspect-ratio: 16 / 9; }
 .facility__meta {
   position: absolute; left: var(--sp-lg); bottom: var(--sp-lg); z-index: 2;
   display: flex; flex-direction: column; gap: 3px;
 }
-.facility--main .facility__meta { left: var(--sp-xl); bottom: var(--sp-xl); }
+/* right 제약이 없으면 긴 캡션이 카드 밖으로 흘러넘침 */
+.facility__meta { right: var(--sp-lg); }
+.facility--main .facility__meta { left: var(--sp-xl); right: var(--sp-xl); bottom: var(--sp-xl); }
+/* 서브 카드는 오버레이 대신 이미지 아래 배치 — 좁은 폭에서도 안전 */
+.facility--sub .facility__meta {
+  position: static; margin-top: var(--sp-sm); gap: 2px;
+}
+.facility--sub .facility__cap { color: var(--text); text-shadow: none; }
+.facility--sub .facility__note { color: var(--text-caption); text-shadow: none; font-size: 11px; }
 .facility__cap {
   color: #FFFFFF; font-weight: 800; font-size: 16px;
   text-shadow: 0 2px 12px rgba(0,0,0,.75);
@@ -1086,7 +1140,8 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   .vet__t { font-size: 17px; }
   .vet__d { font-size: 14.5px; }
   .report__grid { grid-template-columns: repeat(4, 1fr); }
-  .facility-sub { gap: var(--sp-lg); }
+  .facility-sub { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); overflow: visible; }
+  .facility--sub { width: auto; }
   .cta-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-lg); max-width: 860px; margin-inline: auto; }
   .bundle-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-md); }
   .flow { grid-template-columns: repeat(3, 1fr); }
