@@ -414,27 +414,66 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .trainer--more .trainer__name::after { opacity: 1; transform: none; }
 
 /* ==========================================================================
-   Trainer verification (STEP 1 내 통합 · 네 단계 관문 타임라인)
+   Trainer verification — 요약 1줄 상시 노출 + 근거는 토글로 접기
    레일이 아래로 갈수록 그린으로 짙어짐 = 걸러질수록 정예화되는 시각 은유
    ========================================================================== */
-.verify {
+.vet-toggle {
   margin-top: var(--sp-4xl);
-  padding-top: var(--sp-2xl);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+.vet-toggle:hover { border-color: #30303a; }
+.vet-toggle[open] { border-color: var(--brand-line); }
+
+.vet-toggle__sum {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--sp-md) var(--sp-lg);
+  padding: var(--sp-lg) var(--sp-xl);
+  cursor: pointer; list-style: none;
+  transition: background .2s ease;
+}
+.vet-toggle__sum::-webkit-details-marker { display: none; }
+.vet-toggle__sum:hover { background: rgba(255, 255, 255, .025); }
+.vet-toggle__lead {
+  flex: 1 1 260px;
+  font-size: clamp(15px, 2.2vw, 18px); font-weight: 700;
+  color: var(--text); letter-spacing: -.4px; line-height: 1.5;
+}
+.vet-toggle__lead strong { color: var(--brand); }
+
+/* 열기/닫기 큐 — 텍스트와 셰브런 모두 상태에 따라 전환 */
+.vet-toggle__cue {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 700; color: var(--text-caption);
+  transition: color .2s ease;
+}
+.vet-toggle__cue::before { content: "검증 과정 보기"; }
+.vet-toggle__cue::after {
+  content: ""; width: 7px; height: 7px;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform .2s ease;
+}
+.vet-toggle[open] .vet-toggle__cue { color: var(--brand); }
+.vet-toggle[open] .vet-toggle__cue::before { content: "접기"; }
+.vet-toggle[open] .vet-toggle__cue::after { transform: rotate(-135deg) translate(-2px, -2px); }
+
+.vet-toggle__body {
+  padding: var(--sp-xl);
   border-top: 1px solid var(--border);
 }
 
-/* --- 관문 타임라인 --- */
-.vet {
-  display: grid; gap: var(--sp-base);
-  margin-top: var(--sp-xl);
-  list-style: none;
-}
+/* --- 관문 타임라인 (토글 내부 · 카드 없이 레일만으로 구조화) --- */
+.vet { display: grid; gap: var(--sp-lg); list-style: none; }
 .vet__step { position: relative; padding-left: 52px; }
 
 /* 세로 레일 — 각 단계가 다음 단계로 이어지는 선 (마지막 단계 제외) */
 .vet__step::before {
   content: "";
-  position: absolute; left: 17px; top: 40px; bottom: calc(var(--sp-base) * -1 - 4px);
+  position: absolute; left: 17px; top: 40px; bottom: calc(var(--sp-lg) * -1 - 4px);
   width: 2px; border-radius: 2px;
 }
 .vet__step:nth-child(1)::before { background: linear-gradient(180deg, var(--border), rgba(0, 216, 87, .14)); }
@@ -442,15 +481,14 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .vet__step:nth-child(3)::before { background: linear-gradient(180deg, rgba(0, 216, 87, .32), var(--brand)); }
 .vet__step--final::before { display: none; }
 
-/* 단계 마커 */
+/* 단계 마커 — 1~3 무채색, 마지막만 그린 필 */
 .vet__num {
   position: absolute; left: 0; top: 0;
   width: 36px; height: 36px; border-radius: var(--r-pill);
   display: flex; align-items: center; justify-content: center;
-  background: var(--surface-2); border: 1px solid var(--border);
+  background: var(--surface); border: 1px solid var(--border);
   font-size: 14px; font-weight: 800; color: var(--text-caption);
   font-feature-settings: "tnum" 1;
-  transition: color .2s ease, border-color .2s ease;
 }
 .vet__step:nth-child(2) .vet__num { color: var(--text-sub); border-color: #30303a; }
 .vet__step:nth-child(3) .vet__num { color: var(--text); border-color: rgba(0, 216, 87, .28); }
@@ -459,79 +497,25 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   font-size: 17px; box-shadow: 0 0 0 5px rgba(0, 216, 87, .10);
 }
 
-/* 단계 카드 */
-.vet__body {
-  padding: var(--sp-lg);
-  background: var(--surface-2); border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  transition: border-color .2s ease;
-}
-.vet__step:hover .vet__body { border-color: #30303a; }
-.vet__step--final .vet__body {
-  background: linear-gradient(150deg, rgba(0, 216, 87, .10), rgba(0, 216, 87, .02));
-  border-color: var(--brand-line);
-}
-.vet__step--final:hover .vet__body { border-color: rgba(0, 216, 87, .5); }
-
-.vet__flag {
-  font-size: 11.5px; font-weight: 800; color: var(--brand);
-  letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 5px;
-}
-.vet__t { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -.5px; }
+.vet__body { padding-top: 2px; }
+.vet__t { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -.4px; }
 .vet__d { font-size: 13.5px; color: var(--text-sub); margin-top: 4px; line-height: 1.6; }
-
-/* 철학 인용 — 3단계에만 등장하는 에디토리얼 액센트 */
-.vet__quote {
-  margin-top: var(--sp-md);
-  padding-left: var(--sp-md);
-  border-left: 2px solid var(--brand-line);
-  font-size: 14px; font-weight: 700;
-  color: var(--text); line-height: 1.55; letter-spacing: -.3px;
-}
-.vet__quote::before { content: "“"; }
-.vet__quote::after { content: "”"; }
-
-/* 검증 항목 칩 */
-.vet__list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--sp-md); }
-.vet__list li {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px 6px 10px; border-radius: var(--r-pill);
-  background: var(--surface-3); border: 1px solid var(--border);
-  font-size: 12.5px; font-weight: 600; color: var(--text-sub); line-height: 1.4;
-}
-.vet__list li::before { content: "✓"; color: var(--brand); font-size: 11px; font-weight: 800; flex-shrink: 0; }
-.vet__step--final .vet__list li {
-  background: rgba(0, 216, 87, .08); border-color: var(--brand-line); color: var(--text);
-}
 
 /* --- 뽑지 않는 기준 (부정 선택 = 신뢰 신호 · 절제된 무채색) --- */
 .redflag {
   margin-top: var(--sp-xl);
-  padding: var(--sp-lg) var(--sp-xl);
-  background: var(--surface);
+  padding: var(--sp-lg);
+  background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: var(--r-lg);
+  border-radius: var(--r-md);
 }
-.redflag__label { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: var(--sp-md); letter-spacing: -.3px; }
+.redflag__label { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: var(--sp-md); letter-spacing: -.3px; }
 .redflag__list { display: grid; gap: var(--sp-sm); }
 .redflag__list li {
   display: flex; align-items: flex-start; gap: var(--sp-sm);
-  font-size: 14px; color: var(--text-sub); line-height: 1.5;
+  font-size: 13.5px; color: var(--text-sub); line-height: 1.5;
 }
 .redflag__list li::before { content: "✕"; color: var(--text-caption); font-weight: 700; flex-shrink: 0; }
-
-/* --- 결론: 이렇게 검증된 사람을 만납니다 --- */
-.verify-gate {
-  margin-top: var(--sp-2xl);
-  padding-top: var(--sp-xl);
-  border-top: 1px solid var(--border-soft);
-}
-.verify-gate__t {
-  font-size: clamp(18px, 2.8vw, 24px); font-weight: 800;
-  color: var(--text); letter-spacing: -.7px; line-height: 1.35;
-}
-.verify-gate__t strong { color: var(--brand); }
-.verify-gate__d { font-size: 14.5px; color: var(--text-sub); line-height: 1.7; margin-top: var(--sp-sm); }
 
 /* ==========================================================================
    Checklist
@@ -1050,16 +1034,11 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   .card-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-xl); }
   .checklist { grid-template-columns: repeat(2, 1fr); }
 
-  /* 검증 타임라인 — 넓은 화면에서도 읽기 좋은 measure로 중앙 정렬 */
-  .verify__inner { max-width: var(--content-narrow); margin-inline: auto; }
-  .vet__step { padding-left: 64px; }
-  .vet__step::before { left: 21px; top: 46px; }
-  .vet__num { width: 44px; height: 44px; font-size: 16px; }
-  .vet__num--pass { font-size: 20px; }
-  .vet__body { padding: var(--sp-xl); }
-  .vet__t { font-size: 19px; }
+  /* 검증 토글 — 넓은 화면에서 여백·타이포 상향 */
+  .vet-toggle__sum { padding: var(--sp-xl) var(--sp-2xl); }
+  .vet-toggle__body { padding: var(--sp-2xl); }
+  .vet__t { font-size: 17px; }
   .vet__d { font-size: 14.5px; }
-  .vet__list li { font-size: 13px; }
   .report__grid { grid-template-columns: repeat(4, 1fr); }
   .facility-sub { gap: var(--sp-lg); }
   .cta-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-lg); max-width: 860px; margin-inline: auto; }
