@@ -105,3 +105,24 @@ if (lnbItems.length) {
   window.addEventListener('resize', onScroll);
   sync();
 }
+
+// ============ 모바일 GNB 토글 ============
+const gnbToggle = document.querySelector('.gnb__toggle');
+const gnb = document.getElementById('gnb');
+if (gnbToggle && gnb) {
+  const setOpen = (open) => {
+    gnb.classList.toggle('is-open', open);
+    gnbToggle.setAttribute('aria-expanded', String(open));
+    gnbToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+  };
+  gnbToggle.addEventListener('click', () => {
+    setOpen(gnbToggle.getAttribute('aria-expanded') !== 'true');
+  });
+  // 바깥 클릭·ESC로 닫기
+  document.addEventListener('click', (e) => {
+    if (!gnb.contains(e.target) && !gnbToggle.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+  // 데스크탑으로 넓어지면 인라인 배치로 돌아가므로 상태 초기화
+  window.addEventListener('resize', () => { if (window.innerWidth >= 1024) setOpen(false); });
+}

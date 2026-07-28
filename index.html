@@ -14,9 +14,17 @@
 
 <!-- ============ 헤더 ============ -->
 <header class="header">
-  <div class="header__logo"><img src="assets/img/logo.svg" alt="버핏그라운드"></div>
-  <!-- TODO: 실제 상담/추천 폼 URL 연결 -->
-  <a href="#cta" class="header__cta">무료 상담</a>
+  <a class="header__logo" href="https://www.butfitground.com/"><img src="assets/img/logo.svg" alt="버핏그라운드"></a>
+  <nav class="gnb" id="gnb" aria-label="전체 메뉴">
+    <a class="gnb__item gnb__item--accent" href="https://www.butfitground.com/place">지점찾기</a>
+    <a class="gnb__item" href="https://pt.butfitground.com/">PT</a>
+    <a class="gnb__item" href="https://www.teambutfit.com/">팀버핏</a>
+    <a class="gnb__item" href="https://blog.naver.com/butfitground">NEWS</a>
+    <a class="gnb__item" href="https://www.butfitground.com/login">로그인</a>
+  </nav>
+  <button class="gnb__toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="gnb">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
 <!-- ============ LNB — 헤더 아래 고정, 섹션 앵커 이동 + 스크롤 스파이 ============ -->
@@ -28,7 +36,6 @@
     <a class="lnb__item" href="#step3">기록</a>
     <a class="lnb__item" href="#step4">변화</a>
     <a class="lnb__item" href="#review">후기</a>
-    <a class="lnb__item" href="#faq">FAQ</a>
   </div>
 </nav>
 
@@ -64,7 +71,13 @@
     </div>
     <p class="voc__src reveal">실제 버핏그라운드 회원 설문 내용입니다.</p>
 
-    <p class="prob__concl reveal">운동이 어려운 게 아니라<br><span class="prob__u">혼자</span> 하는 게 어려운 겁니다.</p>
+  </div>
+</section>
+
+<!-- ============ 결론 — 화면을 통째로 쓰는 한 문장 ============ -->
+<section class="punch">
+  <div class="container reveal">
+    <p class="punch__t">운동이 어려운 게 아니라<br><span class="punch__u">혼자</span> 하는 게 어려운 겁니다.</p>
   </div>
 </section>
 
@@ -432,8 +445,7 @@
         <span class="opt__num">②</span>
         <p class="opt__title">매칭 받기</p>
         <p class="body opt__body">고르기 어렵다면 전문 매니저가 목적과 경험을 듣고, 왜 이 트레이너인지 이유까지 설명해 드려요.</p>
-        <!-- TODO: 실제 매칭 신청 URL 연결 -->
-        <a href="#cta" class="btn btn--dark">매칭 신청하기</a>
+        <a href="https://pt.butfitground.com/check" target="_blank" rel="noopener" class="btn btn--primary">매칭 신청하기</a>
       </div>
     </div>
 
@@ -652,9 +664,7 @@
       <p class="lead">수업 중에는 방해 없이, 수업 밖에는 마음껏.</p>
     </div>
 
-    <!-- MECE 축: 수업 중 = PT 전용 존 / 수업 밖 = 나머지 존 -->
     <div class="facility-feature reveal">
-      <p class="facility__group">수업 중</p>
       <div class="facility facility--main">
         <div class="facility__meta">
           <span class="facility__cap">PT 전용 존</span>
@@ -665,7 +675,6 @@
     </div>
 
     <div class="reveal">
-      <p class="facility__group">수업 밖</p>
       <div class="facility-sub">
         <div class="facility facility--sub">
           <div class="figure figure--1-1 figure--photo"><img src="assets/img/facility-lifting.jpg" alt="버핏그라운드 리프팅 존 — 프리웨이트 랙과 원판" loading="lazy"></div>
@@ -718,37 +727,6 @@
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
-<section class="section" id="faq">
-  <div class="container center-wrap">
-    <div class="reveal">
-      <h2 class="headline">시작 전, 자주 묻는 질문</h2>
-    </div>
-    <div class="faq reveal">
-      <details class="faq__item">
-        <summary>운동이 처음이라, 따라갈 수 있을지 걱정돼요.</summary>
-        <p class="faq__a">체험 2회로 몸 상태부터 살펴봅니다. 처음이라도 트레이너가 내 속도에 맞춰 강도를 조절해주니, 지금 그대로 편하게 시작하시면 돼요.</p>
-      </details>
-      <details class="faq__item">
-        <summary>체험만 받아보고 결정해도 되나요?</summary>
-        <p class="faq__a">그럼요. 체험 2회 동안 세일즈는 없습니다. 내몸변화 설계서를 받아본 뒤에, 계속할지는 천천히 정하시면 돼요.</p>
-      </details>
-      <details class="faq__item">
-        <summary>트레이너가 나와 잘 안 맞으면 어떡하죠?</summary>
-        <p class="faq__a">그래서 매칭에 공을 들입니다. 직접 고르거나 매니저 추천으로, 실력은 물론 결까지 맞는 트레이너를 찾아드려요. 체험은 이 궁합을 미리 확인해보는 시간이기도 합니다.</p>
-      </details>
-      <details class="faq__item">
-        <summary>수업 내용을 자꾸 잊어버려요.</summary>
-        <p class="faq__a">매 수업이 전용 앱에 기록으로 남습니다. 동작·자세 포인트·출석까지 남아서, PT 없는 날에도 꺼내 보며 복습할 수 있어요.</p>
-      </details>
-      <details class="faq__item">
-        <summary>지점은 어디에 있나요?</summary>
-        <p class="faq__a">수도권 전역에 직영점을 운영하고 있습니다. 지점별 트레이너와 운영 시간은 지점찾기에서 확인하실 수 있어요. <span style="opacity:.7">(하이록스 존은 역삼GFC·합정·삼성·마포 지점 한정)</span></p>
-      </details>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 비전 ============ -->
 <section class="section section--brand">
   <div class="container center-wrap">
@@ -797,14 +775,13 @@
     <div class="cta-grid reveal">
       <div class="cta-card">
         <p class="cta-card__label">어떻게 시작할지, 함께 정하고 싶다면</p>
-        <p class="cta-card__title">전문 매니저 무료 상담</p>
+        <p class="cta-card__title">맞춤 제안받기</p>
         <p class="cta-card__desc">목적과 경험을 듣고, 나에게 맞는 트레이너를 추천해 드려요.</p>
-        <!-- TODO: 실제 전화 상담 URL/번호 연결 -->
-        <a href="#" class="btn btn--outline">맞춤 상담 신청하기</a>
+        <a href="https://pt.butfitground.com/check" target="_blank" rel="noopener" class="btn btn--outline">맞춤 제안받기</a>
       </div>
       <div class="cta-card cta-card--primary">
         <p class="cta-card__label">가볍게 먼저 경험하고 싶다면</p>
-        <p class="cta-card__title">체험 PT로 시작하기</p>
+        <p class="cta-card__title">체험권 구매하기</p>
         <p class="cta-card__desc">세일즈 없이, 설계서 받고 결정해요.</p>
         <p class="cta-card__price"><strong>체험 2회</strong> · 49,900원</p>
         <!-- TODO: 실제 체험권 결제 URL 연결 -->
@@ -812,6 +789,37 @@
       </div>
     </div>
     <p class="cta-reassure reveal">✓ 상담은 <b>무료</b> · 체험 2회 동안 <b>세일즈 없음</b> · 부담 없이 먼저 경험해요</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq">
+  <div class="container center-wrap">
+    <div class="reveal">
+      <h2 class="headline">시작 전, 자주 묻는 질문</h2>
+    </div>
+    <div class="faq reveal">
+      <details class="faq__item">
+        <summary>운동이 처음이라, 따라갈 수 있을지 걱정돼요.</summary>
+        <p class="faq__a">체험 2회로 몸 상태부터 살펴봅니다. 처음이라도 트레이너가 내 속도에 맞춰 강도를 조절해주니, 지금 그대로 편하게 시작하시면 돼요.</p>
+      </details>
+      <details class="faq__item">
+        <summary>체험만 받아보고 결정해도 되나요?</summary>
+        <p class="faq__a">그럼요. 체험 2회 동안 세일즈는 없습니다. 내몸변화 설계서를 받아본 뒤에, 계속할지는 천천히 정하시면 돼요.</p>
+      </details>
+      <details class="faq__item">
+        <summary>트레이너가 나와 잘 안 맞으면 어떡하죠?</summary>
+        <p class="faq__a">그래서 매칭에 공을 들입니다. 직접 고르거나 매니저 추천으로, 실력은 물론 결까지 맞는 트레이너를 찾아드려요. 체험은 이 궁합을 미리 확인해보는 시간이기도 합니다.</p>
+      </details>
+      <details class="faq__item">
+        <summary>수업 내용을 자꾸 잊어버려요.</summary>
+        <p class="faq__a">매 수업이 전용 앱에 기록으로 남습니다. 동작·자세 포인트·출석까지 남아서, PT 없는 날에도 꺼내 보며 복습할 수 있어요.</p>
+      </details>
+      <details class="faq__item">
+        <summary>지점은 어디에 있나요?</summary>
+        <p class="faq__a">수도권 전역에 직영점을 운영하고 있습니다. 지점별 트레이너와 운영 시간은 지점찾기에서 확인하실 수 있어요. <span style="opacity:.7">(하이록스 존은 역삼GFC·합정·삼성·마포 지점 한정)</span></p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -837,9 +845,8 @@
 
 <!-- ============ 플로팅 CTA ============ -->
 <div class="float-cta" id="floatCta">
-  <!-- TODO: 실제 링크 연결 -->
-  <a href="#cta" class="btn btn--outline">맞춤 상담</a>
-  <a href="#cta" class="btn btn--primary">체험권 결제</a>
+  <a href="https://pt.butfitground.com/check" target="_blank" rel="noopener" class="btn btn--outline">맞춤 제안받기</a>
+  <a href="#cta" class="btn btn--primary">체험권 구매하기</a>
 </div>
 
 <script src="script.js"></script>
