@@ -126,3 +126,47 @@ if (gnbToggle && gnb) {
   // 데스크탑으로 넓어지면 인라인 배치로 돌아가므로 상태 초기화
   window.addEventListener('resize', () => { if (window.innerWidth >= 1024) setOpen(false); });
 }
+
+// ============ 이미지 확대 (라이트박스) ============
+const lightbox = document.getElementById('lightbox');
+if (lightbox) {
+  const lbImg = lightbox.querySelector('.lightbox__img');
+  const lbCap = lightbox.querySelector('.lightbox__cap');
+  const lbClose = lightbox.querySelector('.lightbox__close');
+  let lastFocused = null;
+
+  const openLb = (img) => {
+    lastFocused = document.activeElement;
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    // 갤러리 카드는 이미지 아래 캡션이 따로 있으므로 그걸 우선 사용
+    const card = img.closest('.doc, .facility');
+    const cap = card && card.querySelector('.doc__cap, .facility__cap');
+    lbCap.textContent = cap ? cap.textContent.trim() : (img.alt || '');
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  };
+
+  const closeLb = () => {
+    lightbox.hidden = true;
+    lbImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  };
+
+  document.querySelectorAll('[data-zoom]').forEach((img) => {
+    img.addEventListener('click', () => openLb(img));
+    // 키보드로도 열 수 있게
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(img); }
+    });
+  });
+
+  lbClose.addEventListener('click', closeLb);
+  // 이미지 자체를 누른 게 아니면 닫기
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.hidden) closeLb(); });
+}

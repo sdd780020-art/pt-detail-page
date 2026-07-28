@@ -402,14 +402,16 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .card-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-lg); margin-top: var(--sp-2xl); }
 
-.opt__num {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: var(--r-pill);
-  background: var(--brand-soft); color: var(--brand);
-  border: 1px solid var(--brand-line);
-  font-weight: 800; font-size: 15px; margin-bottom: var(--sp-base);
+/* 두 카드는 순서가 아니라 선택지라 번호 대신 그린 룰로 표시 */
+.opt__title {
+  position: relative; padding-top: var(--sp-lg);
+  font-size: clamp(19px, 2.8vw, 23px); font-weight: 800;
+  margin-bottom: var(--sp-sm); letter-spacing: -.5px; color: var(--text);
 }
-.opt__title { font-size: clamp(18px, 2.6vw, 22px); font-weight: 800; margin-bottom: var(--sp-sm); letter-spacing: -.5px; color: var(--text); }
+.opt__title::before {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 28px; height: 3px; border-radius: 2px; background: var(--brand);
+}
 .opt__body { margin-bottom: var(--sp-lg); }
 
 /* Tags */
@@ -1091,10 +1093,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 /* 시작 플로우 (highendgym 참조 · 진입 마찰 완화) */
 
 /* CTA 안심 카피 */
-.cta-reassure {
-  margin-top: var(--sp-lg); font-size: 13.5px; color: var(--text-sub); font-weight: 500;
-}
-.cta-reassure b { color: var(--brand); font-weight: 700; }
 
 /* FAQ 아코디언 (native details/summary · JS 불필요) */
 .faq { max-width: 780px; margin: var(--sp-2xl) auto 0; text-align: left; }
@@ -1126,7 +1124,10 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .cta-card__label { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: var(--sp-sm); }
 .cta-card--primary .cta-card__label { color: rgba(6,33,15,.7); }
-.cta-card__price { font-size: 16px; font-weight: 700; margin-bottom: var(--sp-lg); color: #06210F; }
+.cta-card__price { font-size: 16px; font-weight: 700; margin-bottom: var(--sp-lg); color: var(--text-sub); }
+.cta-card__price strong { color: var(--text); font-weight: 800; }
+.cta-card--primary .cta-card__price { color: rgba(6,33,15,.72); }
+.cta-card--primary .cta-card__price strong { color: #06210F; }
 .cta-card__price strong { font-size: 26px; font-weight: 800; }
 .cta-card--primary .btn--primary { background: #06210F; color: var(--brand); box-shadow: none; }
 .cta-card--primary .btn--primary:hover { opacity: .92; }
@@ -1256,4 +1257,36 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .float-cta .btn { flex: 0 0 auto; min-width: 190px; }
 
   .center-wrap { max-width: var(--content-narrow); margin-inline: auto; }
+}
+
+/* ==========================================================================
+   Lightbox — 설계서·시설 이미지 확대
+   ========================================================================== */
+[data-zoom] { cursor: zoom-in; }
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--sp-base); padding: var(--sp-4xl) var(--sp-lg) var(--sp-2xl);
+  background: rgba(5, 5, 7, .93);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.lightbox[hidden] { display: none; }
+.lightbox__img {
+  max-width: min(100%, 920px); max-height: 76vh;
+  width: auto; height: auto; object-fit: contain;
+  border-radius: var(--r-md);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .65);
+}
+.lightbox__cap { font-size: 13px; color: var(--text-sub); text-align: center; max-width: 620px; }
+.lightbox__close {
+  position: absolute; top: var(--sp-base); right: var(--sp-base);
+  width: 44px; height: 44px; border-radius: var(--r-pill);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .09); color: var(--text);
+  font-size: 17px; font-weight: 700;
+  transition: background .18s ease;
+}
+.lightbox__close:hover { background: rgba(255, 255, 255, .18); }
+@media (min-width: 1024px) {
+  .lightbox__close { top: var(--sp-xl); right: var(--sp-xl); }
 }
