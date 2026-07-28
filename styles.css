@@ -84,26 +84,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 /* ==========================================================================
    Typography (에디토리얼 · clamp 반응형)
    ========================================================================== */
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--brand);
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  margin-bottom: var(--sp-lg);
-}
-.eyebrow::before {
-  content: "";
-  width: 20px; height: 2px;
-  background: var(--brand);
-  border-radius: 2px;
-}
-.section--brand .eyebrow { color: #06210F; }
-.section--brand .eyebrow::before { background: #06210F; }
-
 .display {
   font-size: clamp(38px, 6.5vw, 84px);
   font-weight: 800;
@@ -161,7 +141,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .section--brand .hl { color: #06210F; background: rgba(255,255,255,.45); padding: 0 6px; border-radius: 4px; }
 
 .center-wrap { text-align: center; }
-.center-wrap .eyebrow { justify-content: center; }
 .text-center { text-align: center; }
 
 /* ==========================================================================
@@ -869,6 +848,11 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   font-size: 12px; color: var(--text-caption); letter-spacing: -.2px;
 }
 
+/* 다음 섹션(4 STEP PT)의 "그래서, 혼자 두지 않습니다"와 한 호흡으로 읽히도록
+   두 섹션 사이 여백을 줄임 */
+#problem { padding-bottom: var(--sp-4xl); }
+#system { padding-top: var(--sp-4xl); }
+
 .prob__concl {
   margin-top: var(--sp-4xl);
   font-size: clamp(26px, 6.4vw, 52px); font-weight: 800;
@@ -881,9 +865,10 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
    ========================================================================== */
 .anchor { text-align: center; }
 .anchor__lead {
-  font-size: clamp(14px, 2vw, 17px); font-weight: 600;
-  color: var(--text-sub); letter-spacing: -.3px; margin-bottom: var(--sp-md);
+  font-size: clamp(17px, 3vw, 26px); font-weight: 600;
+  color: var(--text-sub); letter-spacing: -.6px; margin-bottom: var(--sp-lg);
 }
+.anchor__lead strong { color: var(--text); font-weight: 800; }
 .anchor__term {
   display: flex; flex-direction: column; align-items: center;
   font-size: clamp(54px, 15vw, 152px); font-weight: 800;
