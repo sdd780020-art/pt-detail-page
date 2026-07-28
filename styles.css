@@ -485,7 +485,7 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   margin-top: var(--sp-md);
   padding-left: var(--sp-md);
   border-left: 2px solid var(--brand-line);
-  font-size: 14px; font-weight: 700; font-style: italic;
+  font-size: 14px; font-weight: 700;
   color: var(--text); line-height: 1.55; letter-spacing: -.3px;
 }
 .vet__quote::before { content: "“"; }
