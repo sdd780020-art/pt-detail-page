@@ -1035,9 +1035,11 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 
   /* 4 STEP PT 앵커 — 대표 수치는 좌측, 보조 3지표는 우측에 세로로 */
   .anchor__term { letter-spacing: -7px; }
-  .anchor__proof { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+  .anchor__proof { grid-template-columns: 1.75fr 1fr 1fr 1fr; }
   .pf--hero { grid-column: auto; padding: var(--sp-2xl) var(--sp-xl); display: flex; flex-direction: column; justify-content: center; }
   .pf { padding: var(--sp-2xl) var(--sp-lg); }
+  /* 7글자(279,551) + 단위가 컬럼을 넘지 않도록 상한 조정 */
+  .pf--hero .pf__n { font-size: clamp(40px, 5.6vw, 64px); letter-spacing: -2.5px; }
 
   /* Split → 2-column, alternating */
   .split { flex-direction: row; gap: var(--sp-5xl); align-items: center; }
