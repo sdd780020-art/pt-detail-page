@@ -1036,14 +1036,13 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .arev__ava {
   width: 56px; height: 56px; border-radius: var(--r-pill);
   overflow: hidden; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--brand-soft); border: 1px solid var(--brand-line);
-  color: var(--brand); font-size: 20px; font-weight: 800;
+  background: var(--surface-3); border: 1px solid var(--border);
 }
 .arev__ava img { width: 100%; height: 100%; object-fit: cover; }
 .arev__id { min-width: 0; }
 .arev__name { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -.4px; }
-.arev__role { font-size: 12.5px; font-weight: 600; color: var(--brand); margin-top: 2px; }
+.arev__t { font-size: 12.5px; font-weight: 600; color: var(--text-caption); letter-spacing: -.2px; }
+.arev__role { font-size: 12.5px; font-weight: 700; color: var(--brand); margin-top: 3px; }
 .arev__score { text-align: right; line-height: 1.25; }
 .arev__score b {
   display: block; font-size: 15px; font-weight: 800; color: var(--text);
