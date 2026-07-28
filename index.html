@@ -35,7 +35,6 @@
     <a class="lnb__item" href="#step2">설계</a>
     <a class="lnb__item" href="#step3">기록</a>
     <a class="lnb__item" href="#step4">변화</a>
-    <a class="lnb__item" href="#review">후기</a>
   </div>
 </nav>
 
@@ -429,6 +428,79 @@
   </div>
 
   <div class="container">
+    <!-- 앱 후기 — 버핏그라운드 앱 리뷰 화면을 HTML로 재현(캡처 이미지는 모바일에서 글자 뭉개짐).
+         트레이너명·지점·평점·리뷰수·닉네임·날짜·본문 모두 앱 실제 값 -->
+    <div class="reveal">
+      <p class="subhead">이 사람들, 회원들은 이렇게 말합니다.</p>
+      <p class="body">버핏그라운드 앱에 실제로 쌓인 수업 후기예요.</p>
+    </div>
+
+    <div class="arevs reveal">
+      <article class="arev">
+        <header class="arev__hd">
+          <span class="arev__ava" aria-hidden="true">강</span>
+          <div class="arev__id">
+            <p class="arev__name">강희애<span class="arev__br">판교점</span></p>
+            <p class="arev__tags"><span>#뛰어난 전문성</span><span>#체계적인 수업</span></p>
+          </div>
+          <p class="arev__score"><b>5.0</b><span>리뷰 1,462</span></p>
+        </header>
+        <blockquote class="arev__body">사정이 있어 PT를 2주 쉬고 오랜만에 나왔는데, 지금 제 몸이 어떤 게 부족한지 바로 캐치하시고 기구 운동보다 저에게 필요한 수업을 맞춤으로 해주셨어요. 수업 여러 번 들었지만 또 놀라워요.</blockquote>
+        <footer class="arev__ft">
+          <span class="arev__stars" aria-label="별점 5점">★★★★★</span>
+          <span class="arev__by">버피챌린저 · 25.09</span>
+        </footer>
+      </article>
+
+      <article class="arev">
+        <header class="arev__hd">
+          <span class="arev__ava" aria-hidden="true">김</span>
+          <div class="arev__id">
+            <p class="arev__name">김류하<span class="arev__br">판교점</span></p>
+            <p class="arev__tags"><span>#뛰어난 전문성</span><span>#체계적인 수업</span></p>
+          </div>
+          <p class="arev__score"><b>5.0</b><span>리뷰 1,266</span></p>
+        </header>
+        <blockquote class="arev__body">수업 시간 전에 미리 몸 상태와 지난 시간 이후 컨디션을 체크해주셔서, 일방적인 코칭이 아니라 저에게 맞춘 수업이라는 느낌을 받습니다. 미스 동작이 있어도 이해하기 쉽게 바로 피드백을 주시고요.</blockquote>
+        <footer class="arev__ft">
+          <span class="arev__stars" aria-label="별점 5점">★★★★★</span>
+          <span class="arev__by">루틴헌터 · 25.08</span>
+        </footer>
+      </article>
+
+      <article class="arev">
+        <header class="arev__hd">
+          <span class="arev__ava" aria-hidden="true">신</span>
+          <div class="arev__id">
+            <p class="arev__name">신혜원<span class="arev__br">가산점</span></p>
+            <p class="arev__tags"><span>#뛰어난 전문성</span><span>#체계적인 수업</span></p>
+          </div>
+          <p class="arev__score"><b>5.0</b><span>리뷰 1,618</span></p>
+        </header>
+        <blockquote class="arev__body">단순히 동작을 지도하는 수준이 아니라, 체형과 움직임 패턴을 빠르게 파악하고 그에 맞는 프로그램을 체계적으로 설계해주셨어요. 첫 상담부터 목표를 구체적으로 잡고, 현실적인 기간과 단계별 계획을 제시해주셨습니다.</blockquote>
+        <footer class="arev__ft">
+          <span class="arev__stars" aria-label="별점 5점">★★★★★</span>
+          <span class="arev__by">파워빌더 · 26.02</span>
+        </footer>
+      </article>
+
+      <article class="arev arev--key">
+        <header class="arev__hd">
+          <span class="arev__ava" aria-hidden="true">박</span>
+          <div class="arev__id">
+            <p class="arev__name">박소현<span class="arev__br">가산점</span></p>
+            <p class="arev__tags"><span>#뛰어난 전문성</span><span>#체계적인 수업</span></p>
+          </div>
+          <p class="arev__score"><b>5.0</b><span>리뷰 914</span></p>
+        </header>
+        <blockquote class="arev__body">“할 수 있어요, 하나만 더!” 이 한 마디에 이미 끝났다고 생각했던 몸이 다시 힘을 냅니다. <mark>혼자였다면 이 정도 무게는 못 들었을 텐데</mark>, 함께여서 매번 해내고 있어요.</blockquote>
+        <footer class="arev__ft">
+          <span class="arev__stars" aria-label="별점 5점">★★★★★</span>
+          <span class="arev__by">밸런스핏 · 26.02</span>
+        </footer>
+      </article>
+    </div>
+
     <div class="card-grid">
       <div class="card reveal">
         <span class="opt__num">①</span>
@@ -691,48 +763,6 @@
       </div>
       <p class="facility__note">* 하이록스 존은 역삼GFC · 합정 · 삼성 · 마포 지점에서 운영합니다.</p>
     </div>
-  </div>
-</section>
-
-<!-- ============ 후기 ============ -->
-<section class="section section--surface" id="review">
-  <div class="container">
-    <div class="reveal">
-      <h2 class="headline">먼저 시작한 분들의 이야기</h2>
-      <p class="lead">숫자보다 확실한 건, 실제로 달라진 분들의 경험이니까요.</p>
-    </div>
-
-    <!-- 실제 네이버 플레이스 리뷰. 특정 트레이너를 식별할 수 있는 호칭·지점명은 제거하고
-         핵심 대목만 발췌. 기간·감량 수치 등 사실은 원문 그대로 유지 -->
-    <div class="review-scroll reveal">
-      <div class="review">
-        <div class="review__stars" aria-label="별점 5점">★★★★★</div>
-        <p class="review__body">새로운 동작을 할 때마다 영상으로 남겨주셔서, 개인 운동하러 왔을 때 보고 할 수 있어요. 제가 측만이 있는데 그것까지 신경 써서 운동 계획을 짜주시고, 기구 잘 모를까 봐 사진도 넣어주시고 꼼꼼하세요.</p>
-        <p class="review__who">네이버 리뷰</p>
-      </div>
-      <div class="review">
-        <div class="review__stars" aria-label="별점 5점">★★★★★</div>
-        <p class="review__body">여러 번 PT를 받아봤는데, 대부분은 오래 지속하기 어려운 방법이라 그때뿐이었어요. 여기는 동작 하나부터 열까지 혼자 할 수 있도록 가이드를 늘 알려주십니다. 그래서 2년 넘게 꾸준히 하고 있어요.</p>
-        <p class="review__who">네이버 리뷰</p>
-      </div>
-      <div class="review">
-        <div class="review__stars" aria-label="별점 5점">★★★★★</div>
-        <p class="review__body">태어나서 운동을 해본 적도 없고, 30대 접어드니 건강한 몸과는 멀어졌다고 생각했어요. 자세도, 관절을 어떻게 쓰는지도 몰랐는데 이런 초보 수준에 맞춰 알려주시니 수업이 기다려집니다.</p>
-        <p class="review__who">네이버 리뷰</p>
-      </div>
-      <div class="review">
-        <div class="review__stars" aria-label="별점 5점">★★★★★</div>
-        <p class="review__body">매주 시작할 때 컨디션을 물어봐주시고 그에 맞춰 수업을 진행해주세요. 그날 수업 내용도 정리해주셔서 개인 운동 때 참고할 수 있고요. 최근엔 식단까지 병행해 한 달 사이 2kg 정도 감량했습니다.</p>
-        <p class="review__who">네이버 리뷰</p>
-      </div>
-      <div class="review">
-        <div class="review__stars" aria-label="별점 5점">★★★★★</div>
-        <p class="review__body">목표에 맞춰 운동을 세심하게 준비해주시고, 매번 루틴이 달라서 지루하지 않습니다. 근육 위치나 운동 효과도 이해하기 쉽게 설명해주셔서 “왜 이 운동을 하는지” 알게 됐어요.</p>
-        <p class="review__who">네이버 리뷰</p>
-      </div>
-    </div>
-
-    <p class="review__src reveal">네이버 플레이스에 실제로 올라온 후기입니다. 특정 트레이너를 알 수 있는 내용은 덜어내고 옮겼어요.</p>
   </div>
 </section>
 
