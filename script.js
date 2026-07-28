@@ -178,8 +178,11 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
   const track = row.querySelector('.marquee__track');
   if (!track) return;
 
-  const SPEED = 37;          // px/s
-  const RESUME_DELAY = 1800; // 손 뗀 뒤 자동 재개까지
+  // data-dir="rev"인 줄은 반대로 흘러 두 줄이 엇박자를 이룬다.
+  // 속도도 살짝 다르게 줘서 같은 위상으로 겹치지 않게.
+  const rev = row.dataset.dir === 'rev';
+  const SPEED = (rev ? -34 : 37);  // px/s
+  const RESUME_DELAY = 1800;       // 손 뗀 뒤 자동 재개까지
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let pos = 0;
@@ -226,8 +229,14 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
   // 드래그였다면 카드 링크가 열리지 않게
   row.addEventListener('click', (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
 
+  // 역방향은 시작 위치를 한 세트 뒤로 두어야 왼쪽으로 되감을 공간이 생긴다
+  let initialized = false;
   const tick = (now) => {
     if (prev == null) prev = now;
+    if (!initialized) {
+      const w0 = setWidth();
+      if (w0 > 0) { if (rev) { pos = w0; row.scrollLeft = pos; } initialized = true; }
+    }
     const dt = Math.min((now - prev) / 1000, 0.05); // 탭 복귀 시 급점프 방지
     prev = now;
 
@@ -241,6 +250,7 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
       } else {
         pos += SPEED * dt;
         if (pos >= w) pos -= w;
+        else if (pos < 0) pos += w;
         row.scrollLeft = pos;
       }
     }
