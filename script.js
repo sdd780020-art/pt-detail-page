@@ -182,7 +182,7 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
   // data-dir="rev"인 줄은 반대로 흘러 두 줄이 엇박자를 이룬다.
   // 속도도 살짝 다르게 줘서 같은 위상으로 겹치지 않게.
   const rev = row.dataset.dir === 'rev';
-  const SPEED = (rev ? -68 : 74);  // px/s
+  const SPEED = (rev ? -54.4 : 59.2);  // px/s — 기존(-68/74)의 80%
   const RESUME_DELAY = 1800;       // 손 뗀 뒤 자동 재개까지
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
