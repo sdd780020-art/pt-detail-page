@@ -899,6 +899,11 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .voc__q--key::before, .voc__q--key::after { color: var(--brand); }
 
+.voc__src {
+  margin-top: var(--sp-lg); text-align: center;
+  font-size: 13px; line-height: 1.6; color: var(--text-caption); letter-spacing: -.2px;
+}
+
 /* 다음 섹션(4 STEP PT)의 "그래서, 혼자 두지 않습니다"와 한 호흡으로 읽히도록
    두 섹션 사이 여백을 줄임 */
 #system { padding-top: var(--sp-4xl); }
