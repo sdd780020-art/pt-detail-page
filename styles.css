@@ -795,31 +795,29 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .bundle-close .hl { color: var(--brand); }
 
 /* ==========================================================================
-   Statement — 짧은 문장을 크게 쌓아 문단 나열감 제거
-   작은 줄(부정) → 큰 줄(단정) 2연타로 리듬
+   Problem — 포스터형. 핵심 한 문장이 화면을 지배하고 나머지는 최소화
    ========================================================================== */
-.stmt { margin-top: var(--sp-3xl); }
-.stmt__sm {
-  font-size: clamp(15px, 2vw, 17px); font-weight: 600;
+.prob__kicker {
+  font-size: clamp(14px, 2vw, 16px); font-weight: 600;
+  color: var(--text-caption); letter-spacing: -.3px;
+  margin-bottom: var(--sp-base);
+}
+.prob__big {
+  font-size: clamp(33px, 8.4vw, 68px); font-weight: 800;
+  line-height: 1.15; letter-spacing: -2.2px;
+  color: var(--text);
+}
+.prob__u { color: var(--brand); }
+.prob__q { margin-top: var(--sp-4xl); }
+.prob__q span {
+  display: block;
+  font-size: clamp(14px, 2vw, 16px); font-weight: 600;
   color: var(--text-caption); letter-spacing: -.3px;
 }
-.stmt__lg {
-  font-size: clamp(26px, 5.2vw, 44px); font-weight: 800;
-  color: var(--text); letter-spacing: -1.6px; line-height: 1.2;
-  margin-top: 2px;
-  text-wrap: balance;
-}
-.stmt__lg + .stmt__sm { margin-top: var(--sp-2xl); }
-.stmt__q {
-  margin-top: var(--sp-3xl); padding-top: var(--sp-xl);
-  border-top: 1px solid var(--border);
-  font-size: clamp(15px, 2vw, 17px); font-weight: 500;
-  color: var(--text-sub); line-height: 1.7;
-}
-.stmt__q strong {
-  display: inline-block; margin-top: 4px;
-  font-size: clamp(17px, 2.6vw, 21px); font-weight: 800;
-  color: var(--brand); letter-spacing: -.5px;
+.prob__q strong {
+  display: block; margin-top: 7px;
+  font-size: clamp(19px, 3.2vw, 28px); font-weight: 800;
+  color: var(--brand); letter-spacing: -.8px; line-height: 1.3;
 }
 
 /* ==========================================================================
