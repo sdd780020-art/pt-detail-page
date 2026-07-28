@@ -829,29 +829,50 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .bundle-close .hl { color: var(--brand); }
 
 /* ==========================================================================
-   Problem — 포스터형. 핵심 한 문장이 화면을 지배하고 나머지는 최소화
+   Problem — 실제 회원 VOC를 좌우로 엇갈려 쌓아 '여러 목소리'로 읽히게
    ========================================================================== */
-.prob__kicker {
-  font-size: clamp(14px, 2vw, 16px); font-weight: 600;
-  color: var(--text-caption); letter-spacing: -.3px;
-  margin-bottom: var(--sp-base);
-}
 .prob__big {
-  font-size: clamp(33px, 8.4vw, 68px); font-weight: 800;
-  line-height: 1.15; letter-spacing: -2.2px;
+  font-size: clamp(31px, 7.6vw, 60px); font-weight: 800;
+  line-height: 1.16; letter-spacing: -2px;
   color: var(--text);
 }
 .prob__u { color: var(--brand); }
-.prob__q { margin-top: var(--sp-4xl); }
-.prob__q span {
-  display: block;
-  font-size: clamp(14px, 2vw, 16px); font-weight: 600;
-  color: var(--text-caption); letter-spacing: -.3px;
+
+.voc {
+  display: flex; flex-direction: column;
+  gap: var(--sp-md); margin-top: var(--sp-2xl);
 }
-.prob__q strong {
-  display: block; margin-top: 7px;
-  font-size: clamp(19px, 3.2vw, 28px); font-weight: 800;
-  color: var(--brand); letter-spacing: -.8px; line-height: 1.3;
+.voc__q {
+  position: relative;
+  align-self: flex-start; max-width: 90%;
+  padding: var(--sp-base) var(--sp-lg);
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 18px 18px 18px 5px;
+  font-size: clamp(14.5px, 2.1vw, 17px); font-weight: 600;
+  color: var(--text-sub); line-height: 1.6; letter-spacing: -.4px;
+}
+.voc__q::before, .voc__q::after { content: '"'; color: var(--text-caption); font-weight: 800; }
+.voc__q--r {
+  align-self: flex-end;
+  border-radius: 18px 18px 5px 18px;
+}
+/* 마지막 한 마디가 다음 결론으로 넘기는 축 — 그린으로 강조 */
+.voc__q--key {
+  background: linear-gradient(135deg, rgba(0, 216, 87, .13), rgba(0, 216, 87, .04));
+  border-color: var(--brand-line);
+  color: var(--text); font-weight: 700;
+}
+.voc__q--key::before, .voc__q--key::after { color: var(--brand); }
+
+.voc__src {
+  margin-top: var(--sp-md); text-align: right;
+  font-size: 12px; color: var(--text-caption); letter-spacing: -.2px;
+}
+
+.prob__concl {
+  margin-top: var(--sp-4xl);
+  font-size: clamp(26px, 6.4vw, 52px); font-weight: 800;
+  line-height: 1.2; letter-spacing: -1.8px; color: var(--text);
 }
 
 /* ==========================================================================
