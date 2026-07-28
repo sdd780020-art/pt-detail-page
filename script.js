@@ -201,28 +201,36 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
     resumeTimer = setTimeout(() => { paused = false; }, ms);
   };
 
-  // 실제로 넘기는 동작(휠·터치 이동)에만 양보한다.
-  // pointerdown/터치 시작에 걸면 카드를 '누르기만 해도' 멈춰서 답답하므로 제외.
-  ['wheel', 'touchmove'].forEach((ev) =>
-    row.addEventListener(ev, () => holdFor(RESUME_DELAY), { passive: true })
-  );
+  // 넘기는 동작에만 양보한다. 탭은 손가락이 몇 px 흔들려도 touchmove가 발생하므로
+  // 이동 거리 임계값을 둬야 '카드를 누르기만 해도 멈추는' 현상이 사라진다.
+  const MOVE_THRESHOLD = 8;
+  let touchStartX = 0;
+  row.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  row.addEventListener('touchmove', (e) => {
+    if (Math.abs(e.touches[0].clientX - touchStartX) > MOVE_THRESHOLD) holdFor(RESUME_DELAY);
+  }, { passive: true });
+  row.addEventListener('wheel', () => holdFor(RESUME_DELAY), { passive: true });
 
-  // 마우스 드래그로도 넘길 수 있게 (데스크탑엔 스와이프가 없음)
-  let dragging = false, startX = 0, startScroll = 0, moved = 0;
+  // 마우스 드래그로도 넘길 수 있게 (데스크탑엔 스와이프가 없음).
+  // 누르는 즉시 dragging을 켜면 클릭만 해도 멈추므로, 실제로 움직인 뒤에 켠다.
+  let pressing = false, dragging = false, startX = 0, startScroll = 0, moved = 0;
   row.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'mouse') return;
-    dragging = true; moved = 0;
+    pressing = true; moved = 0;
     startX = e.clientX; startScroll = row.scrollLeft;
-    row.classList.add('is-dragging');
-    row.setPointerCapture(e.pointerId);
   });
   row.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
+    if (!pressing) return;
     const dx = e.clientX - startX;
     moved = Math.max(moved, Math.abs(dx));
-    row.scrollLeft = startScroll - dx;
+    if (!dragging && moved > 3) {
+      dragging = true;
+      row.classList.add('is-dragging');
+      try { row.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+    if (dragging) row.scrollLeft = startScroll - dx;
   });
-  const endDrag = () => { dragging = false; row.classList.remove('is-dragging'); };
+  const endDrag = () => { pressing = false; dragging = false; row.classList.remove('is-dragging'); };
   row.addEventListener('pointerup', endDrag);
   row.addEventListener('pointercancel', endDrag);
   // 드래그였다면 카드 링크가 열리지 않게
