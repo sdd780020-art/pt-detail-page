@@ -1013,54 +1013,37 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 
 /* ==========================================================================
-   App reviews — 버핏그라운드 앱 리뷰 화면을 재현 (STEP1 매칭 안, 로스터 직후)
-   캡처 이미지 대신 HTML로 그린 이유: 모바일에서 스크린샷은 글자가 뭉개지고
-   카드 폭이 안 맞음. 데이터는 앱 실제 값.
+   App reviews — 버핏그라운드 앱 후기 (STEP1 매칭 뒤 독립 섹션)
+   원문 그대로 옮기되 길이는 문단 발췌로 조절, 생략은 …로 표시
    ========================================================================== */
 .arevs {
   display: grid; grid-template-columns: 1fr;
-  gap: var(--sp-md); margin-top: var(--sp-xl);
+  gap: var(--sp-md); margin-top: var(--sp-2xl);
 }
 .arev {
-  position: relative;
   background: var(--surface-2); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: var(--sp-lg);
   transition: border-color .2s ease;
 }
-/* 출처 배지 — 가공 후기가 아니라 앱 실제 리뷰임을 카드마다 명시 */
-.arev__src {
-  display: inline-block; margin-bottom: var(--sp-md);
-  padding: 4px 9px; border-radius: var(--r-sm);
-  background: var(--brand-soft); border: 1px solid var(--brand-line);
-  font-size: 10.5px; font-weight: 800; color: var(--brand); letter-spacing: .2px;
-}
 .arev:hover { border-color: #30303a; }
-.arev--key { border-color: var(--brand-line); background: linear-gradient(150deg, rgba(0,216,87,.09), rgba(0,216,87,.02)); }
 
-/* 헤더 — 아바타 / 이름·해시태그 / 평점 */
+/* 헤더 — 트레이너 사진 / 이름·지점 / 평점 */
 .arev__hd {
-  display: grid; grid-template-columns: 40px minmax(0,1fr) auto;
+  display: grid; grid-template-columns: 56px minmax(0,1fr) auto;
   align-items: center; gap: var(--sp-md);
   padding-bottom: var(--sp-md); border-bottom: 1px solid var(--border);
 }
-/* 트레이너 사진 파일이 없어 이니셜 아바타로 대체 */
 .arev__ava {
-  width: 48px; height: 48px; border-radius: var(--r-pill);
+  width: 56px; height: 56px; border-radius: var(--r-pill);
   overflow: hidden; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--brand-soft); border: 1px solid var(--brand-line);
-  color: var(--brand); font-size: 18px; font-weight: 800;
+  color: var(--brand); font-size: 20px; font-weight: 800;
 }
 .arev__ava img { width: 100%; height: 100%; object-fit: cover; }
-/* grid 자식은 min-width:auto가 기본이라 긴 태그가 칼럼을 밀어냄 */
 .arev__id { min-width: 0; }
-.arev__name {
-  font-size: 15.5px; font-weight: 800; color: var(--text); letter-spacing: -.4px;
-  display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap;
-}
-.arev__br { font-size: 12px; font-weight: 600; color: var(--text-caption); letter-spacing: 0; }
-.arev__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
-.arev__tags span { font-size: 11px; font-weight: 700; color: var(--brand); }
+.arev__name { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -.4px; }
+.arev__role { font-size: 12.5px; font-weight: 600; color: var(--brand); margin-top: 2px; }
 .arev__score { text-align: right; line-height: 1.25; }
 .arev__score b {
   display: block; font-size: 15px; font-weight: 800; color: var(--text);
@@ -1071,23 +1054,23 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 
 .arev__body {
   margin-top: var(--sp-md);
-  font-size: 14px; line-height: 1.72; color: var(--text-sub); letter-spacing: -.3px;
+  font-size: 14px; line-height: 1.75; color: var(--text-sub); letter-spacing: -.3px;
 }
+/* 카드마다 하나씩만 — 이 후기가 무슨 얘기인지 3초 안에 잡히게 */
 .arev__body mark {
-  background: none; color: var(--brand); font-weight: 700;
+  background: rgba(0, 216, 87, .12);
+  color: var(--text); font-weight: 700;
+  padding: 1px 3px; border-radius: 3px;
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
 }
+/* 원문에서 문단을 건너뛴 지점 */
+.arev__el { color: var(--text-dim); font-weight: 800; padding: 0 2px; }
 
 .arev__ft {
   display: flex; align-items: center; justify-content: space-between; gap: var(--sp-md);
   margin-top: var(--sp-md);
 }
 .arev__stars { color: var(--brand); font-size: 12px; letter-spacing: 1.5px; }
-/* 원문에서 문단을 건너뛴 지점 — 다듬은 게 아니라 발췌임을 시각적으로 표시 */
-.arev__el { color: var(--text-dim); font-weight: 800; padding: 0 2px; }
-.arevs__note {
-  margin-top: var(--sp-lg);
-  font-size: 11.5px; color: var(--text-caption); line-height: 1.6;
-}
 .arev__by { font-size: 11.5px; color: var(--text-caption); }
 
 /* ==========================================================================
@@ -1304,7 +1287,7 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .rc { width: 232px; margin-right: 12px; }
   .marquee { gap: 12px; }
   .doc { width: 280px; }
-  .arevs { grid-template-columns: repeat(2, 1fr); gap: var(--sp-lg); }
+  .arevs { grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); }
   .arev { padding: var(--sp-xl); }
   .arev__body { font-size: 14.5px; }
 
