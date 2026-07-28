@@ -1086,43 +1086,9 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
    Final CTA
    ========================================================================== */
 /* 성과 티커 (wrtn.io 참조) */
-.cta-ticker {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: var(--sp-sm) var(--sp-lg);
-  margin: 0 auto var(--sp-2xl);
-  padding: var(--sp-base) var(--sp-xl);
-  max-width: 720px;
-  background: var(--surface-2); border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-  font-size: 14px; color: var(--text-sub); font-weight: 500;
-}
 /* wrtn식 박스형 수치 (숫자가 '집계 중'처럼 보이는 카운터 박스) */
-.cta-ticker strong {
-  color: var(--brand); font-weight: 800; font-feature-settings: "tnum" 1;
-  background: var(--surface-3); border: 1px solid var(--border);
-  padding: 2px 10px; border-radius: 7px; margin: 0 2px;
-}
-.cta-ticker .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
 
 /* 시작 플로우 (highendgym 참조 · 진입 마찰 완화) */
-.flow {
-  display: grid; grid-template-columns: 1fr; gap: var(--sp-md);
-  max-width: 860px; margin: var(--sp-2xl) auto 0;
-  text-align: left;
-}
-.flow__step {
-  display: flex; align-items: center; gap: var(--sp-lg);
-  padding: var(--sp-lg) var(--sp-xl);
-  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-lg);
-}
-.flow__n {
-  flex-shrink: 0; width: 34px; height: 34px; border-radius: var(--r-pill);
-  display: flex; align-items: center; justify-content: center;
-  background: var(--brand); color: #06210F; font-weight: 800; font-size: 15px;
-}
-.flow__tx { font-size: 15px; font-weight: 600; color: var(--text); }
-.flow__tx strong { font-weight: 800; }
-.flow__tx span { color: var(--text-sub); font-weight: 500; }
 
 /* CTA 안심 카피 */
 .cta-reassure {
@@ -1160,11 +1126,7 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .cta-card__label { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: var(--sp-sm); }
 .cta-card--primary .cta-card__label { color: rgba(6,33,15,.7); }
-.cta-card__title { font-size: clamp(19px, 2.6vw, 24px); font-weight: 800; margin-bottom: var(--sp-sm); letter-spacing: -.5px; color: var(--text); }
-.cta-card--primary .cta-card__title { color: #06210F; }
-.cta-card__desc { font-size: 14px; color: var(--text-sub); margin-bottom: var(--sp-xl); }
-.cta-card--primary .cta-card__desc { color: rgba(6,33,15,.72); }
-.cta-card__price { font-size: 15px; margin-bottom: var(--sp-lg); color: #06210F; }
+.cta-card__price { font-size: 16px; font-weight: 700; margin-bottom: var(--sp-lg); color: #06210F; }
 .cta-card__price strong { font-size: 26px; font-weight: 800; }
 .cta-card--primary .btn--primary { background: #06210F; color: var(--brand); box-shadow: none; }
 .cta-card--primary .btn--primary:hover { opacity: .92; }
@@ -1280,8 +1242,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .facility__note { font-size: 12.5px; }
   .cta-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-lg); max-width: 860px; margin-inline: auto; }
   .bundle-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-md); }
-  .flow { grid-template-columns: repeat(3, 1fr); }
-  .flow__step { flex-direction: column; align-items: flex-start; gap: var(--sp-md); }
 
   .rc { width: 232px; margin-right: 12px; }
   .marquee { gap: 12px; }
