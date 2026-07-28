@@ -380,38 +380,85 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .tag--active { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand); }
 
 /* ==========================================================================
-   Trainer carousel
+   Trainer roster — 풀블리드 그린 밴드 + 2행 역방향 마퀴
+   레퍼런스(ofsupplies): 브랜드 컬러 전면 플러드 + 흑백 사진 + 초대형 이름
    ========================================================================== */
-.trainer-scroll {
-  display: flex; gap: var(--sp-base);
-  margin-top: var(--sp-3xl);
-  overflow-x: auto; scroll-snap-type: x mandatory;
-  padding-bottom: var(--sp-base);
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+.roster {
+  background: var(--brand);
+  color: #06210F;
+  padding-block: var(--sp-3xl);
+  margin-block: var(--sp-4xl);
 }
-.trainer-scroll::-webkit-scrollbar { display: none; }
-.trainer {
-  flex: 0 0 auto; width: 200px; scroll-snap-align: start;
-  display: block;
+.roster__head { margin-bottom: var(--sp-sm); }
+.roster__kicker {
+  font-size: 12.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  opacity: .62;
 }
-.trainer .figure { margin-bottom: var(--sp-md); transition: border-color .2s ease, transform .2s ease; }
-.trainer:hover .figure { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.4); }
-.trainer__name { font-size: 16px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 4px; }
-.trainer__name::after { content: "→"; font-size: 13px; color: var(--brand); opacity: 0; transform: translateX(-4px); transition: opacity .2s, transform .2s; }
-.trainer:hover .trainer__name::after { opacity: 1; transform: translateX(0); }
-.trainer__meta { font-size: 13px; color: var(--text-sub); margin-top: 2px; }
-.trainer__tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: var(--sp-sm); }
-.trainer__tag { font-size: 11px; font-weight: 600; color: var(--brand); background: var(--brand-soft); padding: 3px 8px; border-radius: var(--r-sm); }
-/* 더 보기 카드 */
-.trainer--more .figure {
-  background: var(--surface-2); border: 1px dashed var(--brand-line);
-  display: flex; align-items: center; justify-content: center;
+.roster__title {
+  font-size: clamp(28px, 5.4vw, 56px); font-weight: 800;
+  line-height: 1.08; letter-spacing: -1.8px; margin-top: var(--sp-sm);
 }
-.trainer--more .figure__label { gap: 10px; }
-.trainer--more .figure__icon { color: var(--brand); opacity: 1; }
-.trainer--more .trainer__name { color: var(--brand); }
-.trainer--more .trainer__name::after { opacity: 1; transform: none; }
+.roster__foot { display: flex; justify-content: flex-end; }
+.roster__more {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 14px; font-weight: 800; letter-spacing: -.3px;
+  border-bottom: 2px solid rgba(6, 33, 15, .35);
+  padding-bottom: 3px;
+  transition: border-color .2s ease;
+}
+.roster__more::after { content: "→"; }
+.roster__more:hover { border-color: #06210F; }
+
+/* --- 마퀴 --- */
+.marquee { display: grid; gap: 10px; margin-block: var(--sp-2xl); }
+.marquee__row {
+  overflow: hidden;
+  /* 양 끝을 페이드시켜 카드가 뷰포트에서 뚝 잘리지 않게 */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+/* 세트를 두 번 이어붙이고 -50% 이동 → 이음매 없음.
+   간격을 gap으로 주면 마지막 아이템 뒤 간격이 빠져 0.5칸씩 어긋나므로
+   반드시 카드의 margin-right로 줄 것. */
+.marquee__track {
+  display: flex; width: max-content;
+  animation: mq 46s linear infinite;
+  will-change: transform;
+}
+.marquee__track--rev { animation-name: mq-rev; animation-duration: 54s; }
+@keyframes mq     { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
+@keyframes mq-rev { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* --- 로스터 카드 --- */
+.rc {
+  flex: 0 0 auto; width: 178px; margin-right: 10px;
+  display: block; color: inherit;
+}
+.rc__ph {
+  aspect-ratio: 3 / 4; overflow: hidden;
+  background: #101014;
+  border: 1.5px solid #06210F;
+}
+.rc__ph img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+  transition: filter .35s ease, transform .45s ease;
+}
+.rc:hover .rc__ph img { filter: grayscale(0) contrast(1); transform: scale(1.05); }
+.rc__meta {
+  border: 1.5px solid #06210F; border-top: none;
+  padding: 11px 13px 14px;
+}
+.rc__name { font-size: clamp(21px, 2.6vw, 27px); font-weight: 800; line-height: 1; letter-spacing: -1.1px; }
+.rc__role { font-size: 12.5px; font-weight: 800; margin-top: 9px; }
+.rc__spec { font-size: 11.5px; font-weight: 600; opacity: .68; margin-top: 3px; line-height: 1.4; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+  .marquee__row { overflow-x: auto; scrollbar-width: none; }
+  .marquee__row::-webkit-scrollbar { display: none; }
+}
 
 /* ==========================================================================
    Trainer verification — 요약 1줄 상시 노출 + 근거는 토글로 접기
@@ -982,20 +1029,19 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* 리빌 내부 자식 스태거 (스텝·칩·트레이너 카드·검증 관문) */
-.js .reveal .step, .js .reveal .pf, .js .reveal .trainer, .js .reveal .vet__step {
+.js .reveal .step, .js .reveal .pf, .js .reveal .vet__step {
   opacity: 0; transform: translateY(14px);
   transition: opacity .55s ease, transform .55s ease;
 }
-.js .reveal.is-visible .step, .js .reveal.is-visible .pf, .js .reveal.is-visible .trainer, .js .reveal.is-visible .vet__step {
+.js .reveal.is-visible .step, .js .reveal.is-visible .pf, .js .reveal.is-visible .vet__step {
   opacity: 1; transform: none;
 }
-.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .pf:nth-child(2), .js .reveal.is-visible .trainer:nth-child(2), .js .reveal.is-visible .vet__step:nth-child(2) { transition-delay: .08s; }
-.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .pf:nth-child(3), .js .reveal.is-visible .trainer:nth-child(3), .js .reveal.is-visible .vet__step:nth-child(3) { transition-delay: .16s; }
-.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .trainer:nth-child(4), .js .reveal.is-visible .vet__step:nth-child(4), .js .reveal.is-visible .pf:nth-child(4) { transition-delay: .24s; }
-.js .reveal.is-visible .trainer:nth-child(5) { transition-delay: .32s; }
+.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .pf:nth-child(2), .js .reveal.is-visible .vet__step:nth-child(2) { transition-delay: .08s; }
+.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .pf:nth-child(3), .js .reveal.is-visible .vet__step:nth-child(3) { transition-delay: .16s; }
+.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .vet__step:nth-child(4), .js .reveal.is-visible .pf:nth-child(4) { transition-delay: .24s; }
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .js .reveal .step, .js .reveal .pf, .js .reveal .trainer, .js .reveal .vet__step { opacity: 1; transform: none; transition: none; }
+  .js .reveal .step, .js .reveal .pf, .js .reveal .vet__step { opacity: 1; transform: none; transition: none; }
   .hero__text > * { animation: none; opacity: 1; }
   .hero__bg img { animation: none; }
   .hero__scroll i { animation: none; opacity: .5; }
@@ -1046,7 +1092,8 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   .flow { grid-template-columns: repeat(3, 1fr); }
   .flow__step { flex-direction: column; align-items: flex-start; gap: var(--sp-md); }
 
-  .trainer { width: 240px; }
+  .rc { width: 232px; margin-right: 12px; }
+  .marquee { gap: 12px; }
   .doc { width: 280px; }
   .review { width: 340px; }
 
