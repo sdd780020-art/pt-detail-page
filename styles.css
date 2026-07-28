@@ -414,48 +414,124 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .trainer--more .trainer__name::after { opacity: 1; transform: none; }
 
 /* ==========================================================================
-   Trainer verification (STEP 1 내 통합 · 5단계 컴팩트 파이프라인)
+   Trainer verification (STEP 1 내 통합 · 네 단계 관문 타임라인)
+   레일이 아래로 갈수록 그린으로 짙어짐 = 걸러질수록 정예화되는 시각 은유
    ========================================================================== */
 .verify {
   margin-top: var(--sp-4xl);
   padding-top: var(--sp-2xl);
   border-top: 1px solid var(--border);
 }
-/* 통과 기준 4영역 (실제 채용 평가표 → 고객 관점) */
-.criteria {
-  display: grid; grid-template-columns: 1fr; gap: var(--sp-md);
+
+/* --- 관문 타임라인 --- */
+.vet {
+  display: grid; gap: var(--sp-base);
   margin-top: var(--sp-xl);
+  list-style: none;
 }
-.crit {
+.vet__step { position: relative; padding-left: 52px; }
+
+/* 세로 레일 — 각 단계가 다음 단계로 이어지는 선 (마지막 단계 제외) */
+.vet__step::before {
+  content: "";
+  position: absolute; left: 17px; top: 40px; bottom: calc(var(--sp-base) * -1 - 4px);
+  width: 2px; border-radius: 2px;
+}
+.vet__step:nth-child(1)::before { background: linear-gradient(180deg, var(--border), rgba(0, 216, 87, .14)); }
+.vet__step:nth-child(2)::before { background: linear-gradient(180deg, rgba(0, 216, 87, .14), rgba(0, 216, 87, .32)); }
+.vet__step:nth-child(3)::before { background: linear-gradient(180deg, rgba(0, 216, 87, .32), var(--brand)); }
+.vet__step--final::before { display: none; }
+
+/* 단계 마커 */
+.vet__num {
+  position: absolute; left: 0; top: 0;
+  width: 36px; height: 36px; border-radius: var(--r-pill);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); border: 1px solid var(--border);
+  font-size: 14px; font-weight: 800; color: var(--text-caption);
+  font-feature-settings: "tnum" 1;
+  transition: color .2s ease, border-color .2s ease;
+}
+.vet__step:nth-child(2) .vet__num { color: var(--text-sub); border-color: #30303a; }
+.vet__step:nth-child(3) .vet__num { color: var(--text); border-color: rgba(0, 216, 87, .28); }
+.vet__num--pass {
+  background: var(--brand); border-color: var(--brand); color: #06210F;
+  font-size: 17px; box-shadow: 0 0 0 5px rgba(0, 216, 87, .10);
+}
+
+/* 단계 카드 */
+.vet__body {
   padding: var(--sp-lg);
   background: var(--surface-2); border: 1px solid var(--border);
   border-radius: var(--r-lg);
   transition: border-color .2s ease;
 }
-.crit:hover { border-color: var(--brand-line); }
-.crit__n { font-size: 12px; font-weight: 800; color: var(--brand); letter-spacing: 1px; }
-.crit__t { font-size: 16px; font-weight: 800; color: var(--text); margin-top: 6px; letter-spacing: -.4px; }
-.crit__d { font-size: 13px; color: var(--text-sub); margin-top: 5px; line-height: 1.55; }
+.vet__step:hover .vet__body { border-color: #30303a; }
+.vet__step--final .vet__body {
+  background: linear-gradient(150deg, rgba(0, 216, 87, .10), rgba(0, 216, 87, .02));
+  border-color: var(--brand-line);
+}
+.vet__step--final:hover .vet__body { border-color: rgba(0, 216, 87, .5); }
 
-/* 뽑지 않는 기준 (부정 선택 = 신뢰 신호 · 웜톤으로 절제) */
+.vet__flag {
+  font-size: 11.5px; font-weight: 800; color: var(--brand);
+  letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 5px;
+}
+.vet__t { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -.5px; }
+.vet__d { font-size: 13.5px; color: var(--text-sub); margin-top: 4px; line-height: 1.6; }
+
+/* 철학 인용 — 3단계에만 등장하는 에디토리얼 액센트 */
+.vet__quote {
+  margin-top: var(--sp-md);
+  padding-left: var(--sp-md);
+  border-left: 2px solid var(--brand-line);
+  font-size: 14px; font-weight: 700; font-style: italic;
+  color: var(--text); line-height: 1.55; letter-spacing: -.3px;
+}
+.vet__quote::before { content: "“"; }
+.vet__quote::after { content: "”"; }
+
+/* 검증 항목 칩 */
+.vet__list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--sp-md); }
+.vet__list li {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px 6px 10px; border-radius: var(--r-pill);
+  background: var(--surface-3); border: 1px solid var(--border);
+  font-size: 12.5px; font-weight: 600; color: var(--text-sub); line-height: 1.4;
+}
+.vet__list li::before { content: "✓"; color: var(--brand); font-size: 11px; font-weight: 800; flex-shrink: 0; }
+.vet__step--final .vet__list li {
+  background: rgba(0, 216, 87, .08); border-color: var(--brand-line); color: var(--text);
+}
+
+/* --- 뽑지 않는 기준 (부정 선택 = 신뢰 신호 · 절제된 무채색) --- */
 .redflag {
-  margin-top: var(--sp-lg);
+  margin-top: var(--sp-xl);
   padding: var(--sp-lg) var(--sp-xl);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
 }
-.redflag__label { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: var(--sp-md); }
+.redflag__label { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: var(--sp-md); letter-spacing: -.3px; }
 .redflag__list { display: grid; gap: var(--sp-sm); }
 .redflag__list li {
   display: flex; align-items: flex-start; gap: var(--sp-sm);
   font-size: 14px; color: var(--text-sub); line-height: 1.5;
 }
 .redflag__list li::before { content: "✕"; color: var(--text-caption); font-weight: 700; flex-shrink: 0; }
+
+/* --- 결론: 이렇게 검증된 사람을 만납니다 --- */
 .verify-gate {
-  margin-top: var(--sp-lg); font-size: clamp(15px, 2vw, 17px); font-weight: 700; color: var(--text);
+  margin-top: var(--sp-2xl);
+  padding-top: var(--sp-xl);
+  border-top: 1px solid var(--border-soft);
 }
-.verify-gate strong { color: var(--brand); }
+.verify-gate__t {
+  font-size: clamp(18px, 2.8vw, 24px); font-weight: 800;
+  color: var(--text); letter-spacing: -.7px; line-height: 1.35;
+}
+.verify-gate__t strong { color: var(--brand); }
+.verify-gate__d { font-size: 14.5px; color: var(--text-sub); line-height: 1.7; margin-top: var(--sp-sm); }
 
 /* ==========================================================================
    Checklist
@@ -890,21 +966,21 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* 리빌 내부 자식 스태거 (스텝·칩·트레이너 카드) */
-.js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer {
+/* 리빌 내부 자식 스태거 (스텝·칩·트레이너 카드·검증 관문) */
+.js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer, .js .reveal .vet__step {
   opacity: 0; transform: translateY(14px);
   transition: opacity .55s ease, transform .55s ease;
 }
-.js .reveal.is-visible .step, .js .reveal.is-visible .proof__chip, .js .reveal.is-visible .trainer {
+.js .reveal.is-visible .step, .js .reveal.is-visible .proof__chip, .js .reveal.is-visible .trainer, .js .reveal.is-visible .vet__step {
   opacity: 1; transform: none;
 }
-.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .proof__chip:nth-child(2), .js .reveal.is-visible .trainer:nth-child(2) { transition-delay: .08s; }
-.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .proof__chip:nth-child(3), .js .reveal.is-visible .trainer:nth-child(3) { transition-delay: .16s; }
-.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .trainer:nth-child(4) { transition-delay: .24s; }
+.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .proof__chip:nth-child(2), .js .reveal.is-visible .trainer:nth-child(2), .js .reveal.is-visible .vet__step:nth-child(2) { transition-delay: .08s; }
+.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .proof__chip:nth-child(3), .js .reveal.is-visible .trainer:nth-child(3), .js .reveal.is-visible .vet__step:nth-child(3) { transition-delay: .16s; }
+.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .trainer:nth-child(4), .js .reveal.is-visible .vet__step:nth-child(4) { transition-delay: .24s; }
 .js .reveal.is-visible .trainer:nth-child(5) { transition-delay: .32s; }
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer { opacity: 1; transform: none; transition: none; }
+  .js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer, .js .reveal .vet__step { opacity: 1; transform: none; transition: none; }
   .hero__text > * { animation: none; opacity: 1; }
   .hero__bg img { animation: none; }
   .hero__scroll i { animation: none; opacity: .5; }
@@ -934,7 +1010,17 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 
   .card-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-xl); }
   .checklist { grid-template-columns: repeat(2, 1fr); }
-  .criteria { grid-template-columns: repeat(2, 1fr); }
+
+  /* 검증 타임라인 — 넓은 화면에서도 읽기 좋은 measure로 중앙 정렬 */
+  .verify__inner { max-width: var(--content-narrow); margin-inline: auto; }
+  .vet__step { padding-left: 64px; }
+  .vet__step::before { left: 21px; top: 46px; }
+  .vet__num { width: 44px; height: 44px; font-size: 16px; }
+  .vet__num--pass { font-size: 20px; }
+  .vet__body { padding: var(--sp-xl); }
+  .vet__t { font-size: 19px; }
+  .vet__d { font-size: 14.5px; }
+  .vet__list li { font-size: 13px; }
   .report__grid { grid-template-columns: repeat(4, 1fr); }
   .facility-sub { gap: var(--sp-lg); }
   .cta-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-lg); max-width: 860px; margin-inline: auto; }
