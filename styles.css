@@ -1022,9 +1022,17 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   gap: var(--sp-md); margin-top: var(--sp-xl);
 }
 .arev {
+  position: relative;
   background: var(--surface-2); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: var(--sp-lg);
   transition: border-color .2s ease;
+}
+/* 출처 배지 — 가공 후기가 아니라 앱 실제 리뷰임을 카드마다 명시 */
+.arev__src {
+  display: inline-block; margin-bottom: var(--sp-md);
+  padding: 4px 9px; border-radius: var(--r-sm);
+  background: var(--brand-soft); border: 1px solid var(--brand-line);
+  font-size: 10.5px; font-weight: 800; color: var(--brand); letter-spacing: .2px;
 }
 .arev:hover { border-color: #30303a; }
 .arev--key { border-color: var(--brand-line); background: linear-gradient(150deg, rgba(0,216,87,.09), rgba(0,216,87,.02)); }
@@ -1037,11 +1045,13 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 /* 트레이너 사진 파일이 없어 이니셜 아바타로 대체 */
 .arev__ava {
-  width: 40px; height: 40px; border-radius: var(--r-pill);
+  width: 48px; height: 48px; border-radius: var(--r-pill);
+  overflow: hidden; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--brand-soft); border: 1px solid var(--brand-line);
-  color: var(--brand); font-size: 16px; font-weight: 800;
+  color: var(--brand); font-size: 18px; font-weight: 800;
 }
+.arev__ava img { width: 100%; height: 100%; object-fit: cover; }
 /* grid 자식은 min-width:auto가 기본이라 긴 태그가 칼럼을 밀어냄 */
 .arev__id { min-width: 0; }
 .arev__name {
@@ -1072,6 +1082,12 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   margin-top: var(--sp-md);
 }
 .arev__stars { color: var(--brand); font-size: 12px; letter-spacing: 1.5px; }
+/* 원문에서 문단을 건너뛴 지점 — 다듬은 게 아니라 발췌임을 시각적으로 표시 */
+.arev__el { color: var(--text-dim); font-weight: 800; padding: 0 2px; }
+.arevs__note {
+  margin-top: var(--sp-lg);
+  font-size: 11.5px; color: var(--text-caption); line-height: 1.6;
+}
 .arev__by { font-size: 11.5px; color: var(--text-caption); }
 
 /* ==========================================================================
