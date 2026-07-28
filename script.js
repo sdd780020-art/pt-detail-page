@@ -170,3 +170,81 @@ if (lightbox) {
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.hidden) closeLb(); });
 }
+
+// ============ 트레이너 마퀴 — 자동 흐름 + 직접 스크롤 ============
+// 동일 세트를 두 번 이어붙여 두고, 한 세트만큼 지나가면 되감아 무한처럼 보이게 한다.
+// 자동 이동은 scrollLeft를 rAF로 증가시켜 만들고, 사용자가 만지면 잠시 멈춘다.
+document.querySelectorAll('.marquee__row').forEach((row) => {
+  const track = row.querySelector('.marquee__track');
+  if (!track) return;
+
+  const SPEED = 37;          // px/s
+  const RESUME_DELAY = 1800; // 손 뗀 뒤 자동 재개까지
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let pos = 0;
+  let paused = reduce;
+  let hovering = false;
+  let resumeTimer = null;
+  let prev = null;
+
+  // 세트 하나의 폭 = 전체의 절반 (내용을 2회 반복해 두었으므로)
+  const setWidth = () => track.scrollWidth / 2;
+
+  const holdFor = (ms) => {
+    paused = true;
+    clearTimeout(resumeTimer);
+    if (reduce) return;
+    resumeTimer = setTimeout(() => { if (!hovering) paused = false; }, ms);
+  };
+
+  // 사용자가 넘기기 시작하면 자동 이동을 잠시 양보
+  ['wheel', 'touchstart', 'pointerdown'].forEach((ev) =>
+    row.addEventListener(ev, () => holdFor(RESUME_DELAY), { passive: true })
+  );
+  row.addEventListener('mouseenter', () => { hovering = true; paused = true; clearTimeout(resumeTimer); });
+  row.addEventListener('mouseleave', () => { hovering = false; if (!reduce) holdFor(300); });
+
+  // 마우스 드래그로도 넘길 수 있게 (데스크탑엔 스와이프가 없음)
+  let dragging = false, startX = 0, startScroll = 0, moved = 0;
+  row.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    dragging = true; moved = 0;
+    startX = e.clientX; startScroll = row.scrollLeft;
+    row.classList.add('is-dragging');
+    row.setPointerCapture(e.pointerId);
+  });
+  row.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    row.scrollLeft = startScroll - dx;
+  });
+  const endDrag = () => { dragging = false; row.classList.remove('is-dragging'); };
+  row.addEventListener('pointerup', endDrag);
+  row.addEventListener('pointercancel', endDrag);
+  // 드래그였다면 카드 링크가 열리지 않게
+  row.addEventListener('click', (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+  const tick = (now) => {
+    if (prev == null) prev = now;
+    const dt = Math.min((now - prev) / 1000, 0.05); // 탭 복귀 시 급점프 방지
+    prev = now;
+
+    const w = setWidth();
+    if (w > 0) {
+      if (paused || dragging) {
+        pos = row.scrollLeft;
+        // 사용자가 끝까지 밀었으면 되감아 계속 넘길 수 있게
+        if (pos >= w) { pos -= w; row.scrollLeft = pos; }
+        else if (pos <= 0) { pos += w; row.scrollLeft = pos; }
+      } else {
+        pos += SPEED * dt;
+        if (pos >= w) pos -= w;
+        row.scrollLeft = pos;
+      }
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+});

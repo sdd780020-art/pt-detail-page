@@ -454,26 +454,29 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .roster__more:hover { border-color: #06210F; }
 
 /* --- 마퀴 --- */
+/* CSS 애니메이션 대신 네이티브 가로 스크롤 + JS가 밀어주는 방식.
+   이유: transform 애니메이션은 사용자가 직접 넘길 수단이 없어 기다려야만 함.
+   overflow-x:auto로 두면 터치 스와이프·트랙패드·드래그가 그대로 동작하고
+   자동 흐름은 script.js가 scrollLeft를 증가시켜 만든다. */
 .marquee { display: grid; gap: 10px; margin-block: var(--sp-2xl); }
 .marquee__row {
-  overflow: hidden;
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;   /* 끝에서 페이지가 좌우로 딸려가지 않게 */
+  cursor: grab;
   /* 양 끝을 페이드시켜 카드가 뷰포트에서 뚝 잘리지 않게 */
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
-/* 세트를 두 번 이어붙이고 -50% 이동 → 이음매 없음.
-   간격을 gap으로 주면 마지막 아이템 뒤 간격이 빠져 0.5칸씩 어긋나므로
+.marquee__row::-webkit-scrollbar { display: none; }
+.marquee__row.is-dragging { cursor: grabbing; }
+/* 세트를 두 번 이어붙여 두고, 한 세트만큼 넘어가면 되감아 이음매를 감춘다.
+   간격을 gap으로 주면 마지막 카드 뒤 간격이 빠져 되감기 지점이 어긋나므로
    반드시 카드의 margin-right로 줄 것. */
-/* 속도는 '지속시간'이 아니라 '체감 픽셀속도' 기준으로 잡아야 함.
-   카드 4장(752px)/46s = 16px/s 였고, 요청대로 1.5배(약 24px/s).
-   1행 16장이면 세트 폭이 3008px이므로 3008/24.5 ≈ 120s. */
-.marquee__track {
-  display: flex; width: max-content;
-  animation: mq 120s linear infinite;
-  will-change: transform;
-}
-@keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__track { display: flex; width: max-content; }
+/* 드래그 중 이미지·텍스트가 선택되거나 고스트 드래그되지 않게 */
+.marquee__row img { -webkit-user-drag: none; user-drag: none; }
+.marquee__row.is-dragging * { user-select: none; }
 
 /* --- 로스터 카드 --- */
 .rc {
@@ -510,11 +513,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .rc__bar--r { width: 38%; }
 .rc__bar--s { width: 52%; height: 8px; }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee__track { animation: none; }
-  .marquee__row { overflow-x: auto; scrollbar-width: none; }
-  .marquee__row::-webkit-scrollbar { display: none; }
-}
 
 /* ==========================================================================
    Trainer verification — 요약 1줄 상시 노출 + 근거는 토글로 접기
