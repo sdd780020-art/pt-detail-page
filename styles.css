@@ -424,43 +424,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .tag--active { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand); }
 
 /* ==========================================================================
-   Need types — "직접 고르세요"에 '고르는 기준'을 주는 카드
-   4 STEP 카드(.step)와 혼동되면 안 되므로 번호 없이 좌측 그린 룰로 구분하고,
-   그리드 리듬도 다르게(.steps는 2열/4열, 여기는 1열/2열) 잡음
-   ========================================================================== */
-.needs { margin-top: var(--sp-3xl); }
-.need-grid {
-  display: grid; grid-template-columns: 1fr;
-  gap: var(--sp-md); margin-top: var(--sp-xl);
-}
-.need {
-  padding: var(--sp-lg) var(--sp-xl);
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--brand-line);
-  border-radius: var(--r-md);
-}
-.need__t {
-  font-size: clamp(17px, 2.3vw, 19px); font-weight: 800;
-  letter-spacing: -.5px; color: var(--text);
-}
-.need__d {
-  margin-top: var(--sp-sm);
-  font-size: 14.5px; color: var(--text-sub); line-height: 1.7;
-}
-.need__m {
-  margin-top: var(--sp-md);
-  font-size: 13px; font-weight: 700;
-  color: var(--brand); letter-spacing: -.2px;
-}
-.need__m::before { content: "→ "; }
-.need__foot {
-  margin-top: var(--sp-lg);
-  font-size: 13.5px; color: var(--text-caption);
-  line-height: 1.7; letter-spacing: -.2px;
-}
-
-/* ==========================================================================
    Trainer roster — 풀블리드 그린 밴드 + 2행 역방향 마퀴
    레퍼런스(ofsupplies): 브랜드 컬러 전면 플러드 + 흑백 사진 + 초대형 이름
    ========================================================================== */
@@ -1255,7 +1218,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .split--reverse { flex-direction: row-reverse; }
 
   .card-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-xl); }
-  .need-grid { grid-template-columns: repeat(2, 1fr); gap: var(--sp-lg); }
   .checklist { grid-template-columns: repeat(2, 1fr); }
 
   /* 검증 토글 — 넓은 화면에서 여백·타이포 상향 */
