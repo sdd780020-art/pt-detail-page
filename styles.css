@@ -752,30 +752,61 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .bundle-close .hl { color: var(--brand); }
 
 /* ==========================================================================
-   Data proof (🆕 279,551건 규모감)
+   4 STEP PT — 코인드 텀 앵커 락업 (teambutfit HYBRID TRAINING 패턴)
+   작은 리드 → 초대형 텀 → 태그라인. 페이지 전체의 키메시지.
    ========================================================================== */
-.proof {
-  margin-top: var(--sp-3xl);
+.anchor { text-align: center; }
+.anchor__lead {
+  font-size: clamp(14px, 2vw, 17px); font-weight: 600;
+  color: var(--text-sub); letter-spacing: -.3px; margin-bottom: var(--sp-md);
+}
+.anchor__term {
+  display: flex; flex-direction: column; align-items: center;
+  font-size: clamp(54px, 15vw, 152px); font-weight: 800;
+  line-height: .88; letter-spacing: -4px;
+  font-feature-settings: "tnum" 1;
+}
+.anchor__term-a { color: var(--text); }
+.anchor__term-b {
+  color: var(--brand);
+  text-shadow: 0 0 70px rgba(0, 216, 87, .3);
+}
+.anchor__tag {
+  margin-top: var(--sp-lg);
+  font-size: clamp(16px, 2.4vw, 21px); font-weight: 600;
+  color: var(--text-sub); letter-spacing: -.5px;
+}
+.anchor__tag strong { color: var(--text); font-weight: 800; }
+
+/* 수치 번들 — 왜 우리인지, 근거를 한 화면에 (MECE: 수치는 여기 + CTA 티커에만) */
+.anchor__proof {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; margin-top: var(--sp-4xl);
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.pf {
+  background: var(--bg-deep);
+  padding: var(--sp-lg) var(--sp-md);
   text-align: center;
 }
-.proof__big {
-  font-size: clamp(56px, 13vw, 148px); font-weight: 800; line-height: 1;
-  letter-spacing: -4px; color: var(--brand);
+/* 대표 수치 — 모바일에서 3칸 전체를 차지 */
+.pf--hero { grid-column: 1 / -1; padding: var(--sp-2xl) var(--sp-lg); }
+.pf__n {
+  font-size: clamp(22px, 5vw, 30px); font-weight: 800; line-height: 1.1;
+  color: var(--text); letter-spacing: -1.2px;
   font-feature-settings: "tnum" 1;
-  text-shadow: 0 0 60px rgba(0,216,87,.28);
 }
-.proof__big .unit { font-size: .28em; color: var(--text); margin-left: 6px; letter-spacing: -1px; }
-.proof__cap { font-size: clamp(15px, 2vw, 18px); color: var(--text-sub); margin-top: var(--sp-base); font-weight: 500; }
-.proof__chips {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sp-md);
-  margin-top: var(--sp-2xl);
+.pf__n .unit { font-size: .55em; margin-left: 2px; color: var(--text-sub); font-weight: 700; letter-spacing: -.5px; }
+.pf--hero .pf__n {
+  font-size: clamp(44px, 11vw, 76px); letter-spacing: -3px;
+  color: var(--brand); text-shadow: 0 0 50px rgba(0, 216, 87, .25);
 }
-.proof__chip {
-  padding: 10px 18px; border-radius: var(--r-pill);
-  background: var(--surface-2); border: 1px solid var(--border);
-  font-size: 14px; font-weight: 600; color: var(--text-sub);
-}
-.proof__chip strong { color: var(--text); font-weight: 800; }
+.pf--hero .pf__n .unit { font-size: .3em; color: var(--text); }
+.pf__l { font-size: 12.5px; color: var(--text-caption); margin-top: 6px; line-height: 1.45; font-weight: 500; }
+.pf--hero .pf__l { font-size: clamp(14px, 2vw, 16px); color: var(--text-sub); margin-top: var(--sp-sm); }
 
 /* ==========================================================================
    Facility gallery
@@ -967,20 +998,20 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* 리빌 내부 자식 스태거 (스텝·칩·트레이너 카드·검증 관문) */
-.js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer, .js .reveal .vet__step {
+.js .reveal .step, .js .reveal .pf, .js .reveal .trainer, .js .reveal .vet__step {
   opacity: 0; transform: translateY(14px);
   transition: opacity .55s ease, transform .55s ease;
 }
-.js .reveal.is-visible .step, .js .reveal.is-visible .proof__chip, .js .reveal.is-visible .trainer, .js .reveal.is-visible .vet__step {
+.js .reveal.is-visible .step, .js .reveal.is-visible .pf, .js .reveal.is-visible .trainer, .js .reveal.is-visible .vet__step {
   opacity: 1; transform: none;
 }
-.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .proof__chip:nth-child(2), .js .reveal.is-visible .trainer:nth-child(2), .js .reveal.is-visible .vet__step:nth-child(2) { transition-delay: .08s; }
-.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .proof__chip:nth-child(3), .js .reveal.is-visible .trainer:nth-child(3), .js .reveal.is-visible .vet__step:nth-child(3) { transition-delay: .16s; }
-.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .trainer:nth-child(4), .js .reveal.is-visible .vet__step:nth-child(4) { transition-delay: .24s; }
+.js .reveal.is-visible .step:nth-child(2), .js .reveal.is-visible .pf:nth-child(2), .js .reveal.is-visible .trainer:nth-child(2), .js .reveal.is-visible .vet__step:nth-child(2) { transition-delay: .08s; }
+.js .reveal.is-visible .step:nth-child(3), .js .reveal.is-visible .pf:nth-child(3), .js .reveal.is-visible .trainer:nth-child(3), .js .reveal.is-visible .vet__step:nth-child(3) { transition-delay: .16s; }
+.js .reveal.is-visible .step:nth-child(4), .js .reveal.is-visible .trainer:nth-child(4), .js .reveal.is-visible .vet__step:nth-child(4), .js .reveal.is-visible .pf:nth-child(4) { transition-delay: .24s; }
 .js .reveal.is-visible .trainer:nth-child(5) { transition-delay: .32s; }
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .js .reveal .step, .js .reveal .proof__chip, .js .reveal .trainer, .js .reveal .vet__step { opacity: 1; transform: none; transition: none; }
+  .js .reveal .step, .js .reveal .pf, .js .reveal .trainer, .js .reveal .vet__step { opacity: 1; transform: none; transition: none; }
   .hero__text > * { animation: none; opacity: 1; }
   .hero__bg img { animation: none; }
   .hero__scroll i { animation: none; opacity: .5; }
@@ -1001,6 +1032,12 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 
   .steps { grid-template-columns: repeat(4, 1fr); gap: var(--sp-lg); }
   .step { padding: var(--sp-2xl) var(--sp-xl); }
+
+  /* 4 STEP PT 앵커 — 대표 수치는 좌측, 보조 3지표는 우측에 세로로 */
+  .anchor__term { letter-spacing: -7px; }
+  .anchor__proof { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+  .pf--hero { grid-column: auto; padding: var(--sp-2xl) var(--sp-xl); display: flex; flex-direction: column; justify-content: center; }
+  .pf { padding: var(--sp-2xl) var(--sp-lg); }
 
   /* Split → 2-column, alternating */
   .split { flex-direction: row; gap: var(--sp-5xl); align-items: center; }
