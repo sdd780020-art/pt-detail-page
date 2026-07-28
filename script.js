@@ -64,3 +64,44 @@ if (floatCta) {
   }
   sync();
 }
+
+// ============ LNB 스크롤 스파이 ============
+// 헤더+LNB에 가려진 영역을 제외한 뷰포트 상단 밴드에 들어온 섹션을 활성 처리
+const lnbItems = Array.from(document.querySelectorAll('.lnb__item'));
+if (lnbItems.length) {
+  const targets = lnbItems
+    .map((a) => {
+      const el = document.querySelector(a.getAttribute('href'));
+      return el ? { a, el } : null;
+    })
+    .filter(Boolean);
+
+  const setActive = (a) => lnbItems.forEach((i) => i.classList.toggle('is-active', i === a));
+
+  const sync = () => {
+    const bar = document.querySelector('.lnb');
+    const offset = (bar ? bar.getBoundingClientRect().bottom : 110) + 8;
+    let current = null;
+    targets.forEach(({ a, el }) => {
+      const r = el.getBoundingClientRect();
+      // 섹션 상단이 기준선 위로 올라갔고, 하단은 아직 기준선 아래 → 현재 섹션
+      if (r.top <= offset && r.bottom > offset) current = a;
+    });
+    // 최하단에서 마지막 항목 고정 (짧은 푸터로 인해 어떤 섹션도 안 걸리는 경우)
+    if (!current && window.scrollY + window.innerHeight >= document.body.scrollHeight - 2) {
+      current = targets[targets.length - 1].a;
+    }
+    if (current) setActive(current);
+    else lnbItems.forEach((i) => i.classList.remove('is-active'));
+  };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { sync(); ticking = false; });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  sync();
+}

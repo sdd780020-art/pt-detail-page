@@ -72,7 +72,7 @@ button { font-family: inherit; border: none; cursor: pointer; background: none; 
 .container--narrow { max-width: var(--content-narrow); }
 
 .section { padding-block: var(--sec-y); position: relative; }
-section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가리게 */
+section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + 여유 */
 .section--surface { background: var(--surface); }
 .section--deep { background: var(--bg-deep); }
 /* 강조 반전 섹션 (그린 배경) — 절제해서 사용 */
@@ -187,6 +187,40 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
   transition: box-shadow .2s ease;
 }
 .header__cta:hover { box-shadow: 0 6px 20px rgba(0, 216, 87, .3); }
+
+/* ==========================================================================
+   LNB — 헤더 바로 아래 고정되는 섹션 내비
+   헤더(60/72px) 높이만큼 top을 주고, 섹션 scroll-margin은 헤더+LNB 합만큼
+   ========================================================================== */
+.lnb {
+  position: sticky; top: 60px; z-index: 99;
+  background: rgba(13, 13, 14, .88);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.lnb__inner {
+  display: flex; gap: 2px;
+  max-width: var(--content); margin: 0 auto;
+  padding: 0 var(--sp-md);
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.lnb__inner::-webkit-scrollbar { display: none; }
+.lnb__item {
+  position: relative; flex: 0 0 auto;
+  padding: 14px 12px 13px;
+  font-size: 14px; font-weight: 700; letter-spacing: -.4px;
+  color: var(--text-caption);
+  transition: color .18s ease;
+  white-space: nowrap;
+}
+.lnb__item:hover { color: var(--text-sub); }
+.lnb__item::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 0;
+  height: 2px; background: var(--brand); border-radius: 2px;
+  transform: scaleX(0); transition: transform .22s ease;
+}
+.lnb__item.is-active { color: var(--text); }
+.lnb__item.is-active::after { transform: scaleX(1); }
 
 /* ==========================================================================
    Buttons
@@ -1108,6 +1142,11 @@ section[id] { scroll-margin-top: 72px; } /* 스티키 헤더에 앵커 안 가�
 
   .container { padding-inline: var(--sp-3xl); }
   .header { height: 72px; padding-inline: var(--sp-4xl); }
+  .lnb { top: 72px; }
+  .lnb__inner { padding-inline: var(--sp-3xl); gap: var(--sp-sm); }
+  .lnb__item { padding: 16px 14px 15px; font-size: 15px; }
+  .lnb__item::after { left: 14px; right: 14px; }
+  section[id] { scroll-margin-top: 136px; }
 
   .btn-row { flex-direction: row; }
   .btn { width: auto; min-width: 210px; }
