@@ -173,7 +173,8 @@ if (lightbox) {
 
 // ============ 트레이너 마퀴 — 자동 흐름 + 직접 스크롤 ============
 // 동일 세트를 두 번 이어붙여 두고, 한 세트만큼 지나가면 되감아 무한처럼 보이게 한다.
-// 자동 이동은 scrollLeft를 rAF로 증가시켜 만들고, 사용자가 만지면 잠시 멈춘다.
+// 자동 이동은 scrollLeft를 rAF로 증가시켜 만든다. 넘기는 동작(휠·터치 이동·드래그)에만
+// 잠시 양보하고, 카드를 누르거나 마우스를 올리는 것으로는 멈추지 않는다.
 document.querySelectorAll('.marquee__row').forEach((row) => {
   const track = row.querySelector('.marquee__track');
   if (!track) return;
@@ -181,13 +182,12 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
   // data-dir="rev"인 줄은 반대로 흘러 두 줄이 엇박자를 이룬다.
   // 속도도 살짝 다르게 줘서 같은 위상으로 겹치지 않게.
   const rev = row.dataset.dir === 'rev';
-  const SPEED = (rev ? -34 : 37);  // px/s
+  const SPEED = (rev ? -68 : 74);  // px/s
   const RESUME_DELAY = 1800;       // 손 뗀 뒤 자동 재개까지
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let pos = 0;
   let paused = reduce;
-  let hovering = false;
   let resumeTimer = null;
   let prev = null;
 
@@ -198,15 +198,14 @@ document.querySelectorAll('.marquee__row').forEach((row) => {
     paused = true;
     clearTimeout(resumeTimer);
     if (reduce) return;
-    resumeTimer = setTimeout(() => { if (!hovering) paused = false; }, ms);
+    resumeTimer = setTimeout(() => { paused = false; }, ms);
   };
 
-  // 사용자가 넘기기 시작하면 자동 이동을 잠시 양보
-  ['wheel', 'touchstart', 'pointerdown'].forEach((ev) =>
+  // 실제로 넘기는 동작(휠·터치 이동)에만 양보한다.
+  // pointerdown/터치 시작에 걸면 카드를 '누르기만 해도' 멈춰서 답답하므로 제외.
+  ['wheel', 'touchmove'].forEach((ev) =>
     row.addEventListener(ev, () => holdFor(RESUME_DELAY), { passive: true })
   );
-  row.addEventListener('mouseenter', () => { hovering = true; paused = true; clearTimeout(resumeTimer); });
-  row.addEventListener('mouseleave', () => { hovering = false; if (!reduce) holdFor(300); });
 
   // 마우스 드래그로도 넘길 수 있게 (데스크탑엔 스와이프가 없음)
   let dragging = false, startX = 0, startScroll = 0, moved = 0;
