@@ -882,22 +882,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   color: var(--text);
 }
 .punch__u { color: var(--brand); }
-
-/* ==========================================================================
-   Cause — 원인. punch(문제)와 4 STEP PT(솔루션) 사이의 논리 다리
-   punch와 같은 배경으로 이어 붙여 한 호흡으로 읽히게 한다
-   ========================================================================== */
-.cause { background: var(--bg-deep); padding-bottom: var(--sp-5xl); }
-.cause__deny {
-  font-size: clamp(16px, 2.4vw, 21px); font-weight: 600;
-  color: var(--text-caption); letter-spacing: -.5px;
-}
-.cause__core {
-  margin-top: var(--sp-md);
-  font-size: clamp(25px, 5.6vw, 48px); font-weight: 800;
-  line-height: 1.24; letter-spacing: -1.8px; color: var(--text);
-}
-.cause__u { color: var(--brand); }
 .js .reveal .punch__t { opacity: 0; transform: translateY(26px) scale(.975); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .js .reveal.is-visible .punch__t { opacity: 1; transform: none; }
 
