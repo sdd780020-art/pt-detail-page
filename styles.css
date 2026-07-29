@@ -1117,7 +1117,8 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .cta-card--primary .cta-card__price { color: rgba(6,33,15,.72); }
 .cta-card--primary .cta-card__price strong { color: #06210F; }
 .cta-card__price strong { font-size: 26px; font-weight: 800; }
-.cta-card__note { font-size: 12px; font-weight: 600; margin-bottom: var(--sp-lg); color: rgba(6,33,15,.5); }
+.cta-card__note { font-size: 12px; font-weight: 600; margin-bottom: var(--sp-lg); color: var(--text-caption); }
+.cta-card--primary .cta-card__note { color: rgba(6,33,15,.5); }
 .cta-card--primary .btn--primary { background: #06210F; color: var(--brand); box-shadow: none; }
 .cta-card--primary .btn--primary:hover { opacity: .92; }
 
