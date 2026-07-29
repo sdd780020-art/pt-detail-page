@@ -1100,35 +1100,42 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .faq__link { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
-/* 정찰제 가격표 — 지점 / PT 회당 / 첫구매 패키지 3열.
-   좁은 FAQ 폭에서도 금액이 세로로 스캔되도록 숫자는 우측 정렬 + 줄바꿈 금지 */
-.ptable-wrap { overflow-x: auto; margin: var(--sp-md) 0 var(--sp-md); }
+/* 정찰제 가격표 — 지점 / 정규 PT 회당 / 첫 구매 패키지 회당.
+   같은 '회당' 기준으로 나란히 둬야 패키지가 싸다는 게 바로 보인다.
+   모바일(390px) 기준 스크롤 없이 들어가도록 폰트·여백을 최소로 잡음 */
+.ptable-wrap { overflow-x: auto; margin: var(--sp-md) 0; }
 .ptable {
   width: 100%; border-collapse: collapse;
-  font-size: 12.5px; font-feature-settings: "tnum" 1;
+  font-size: 12px; font-feature-settings: "tnum" 1;
 }
 .ptable th {
-  text-align: left; padding-bottom: 7px;
-  font-size: 11px; font-weight: 800; letter-spacing: -.2px;
-  color: var(--text-caption); border-bottom: 1px solid var(--border);
+  text-align: left; padding-bottom: 8px; vertical-align: bottom;
+  font-size: 11px; font-weight: 800; letter-spacing: -.3px;
+  color: var(--text); border-bottom: 1px solid var(--border);
+}
+.ptable th small {
+  display: block; margin-top: 2px;
+  font-size: 10px; font-weight: 600; color: var(--text-caption);
 }
 .ptable td {
-  padding: 9px 0; border-bottom: 1px solid var(--border);
+  padding: 10px 0; border-bottom: 1px solid var(--border);
   color: var(--text); letter-spacing: -.3px;
 }
 .ptable tbody tr:last-child td { border-bottom: none; }
-/* 2·3열은 숫자 — 우측 정렬로 자릿수를 맞춰 비교되게 */
+/* 2·3열은 숫자 — 우측 정렬로 자릿수를 맞춰 세로 비교되게 */
 .ptable th:nth-child(2), .ptable td:nth-child(2),
-.ptable th:nth-child(3), .ptable td:nth-child(3) { text-align: right; white-space: nowrap; }
-.ptable td:nth-child(2) { color: var(--text-sub); padding-left: var(--sp-sm); }
-.ptable td:nth-child(3) { color: var(--brand); font-weight: 800; padding-left: var(--sp-sm); }
+.ptable th:nth-child(3), .ptable td:nth-child(3) {
+  text-align: right; white-space: nowrap; padding-left: var(--sp-sm);
+}
+.ptable td:nth-child(2) { color: var(--text-sub); }
+.ptable td:nth-child(3) { color: var(--brand); font-weight: 800; }
 
 .ptable__hl {
-  margin-bottom: 6px; font-size: 12.5px; font-weight: 600;
+  margin-bottom: 5px; font-size: 12.5px; font-weight: 600;
   color: var(--text-sub); letter-spacing: -.3px;
 }
 .ptable__hl strong { color: var(--brand); font-weight: 800; }
-.ptable__note { font-size: 11.5px; line-height: 1.6; color: var(--text-caption); letter-spacing: -.2px; }
+.ptable__note { font-size: 11px; line-height: 1.55; color: var(--text-caption); letter-spacing: -.2px; }
 
 .cta-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-base); margin-top: var(--sp-2xl); }
 .cta-card {
