@@ -434,10 +434,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   margin-block: var(--sp-4xl);
 }
 .roster__head { margin-bottom: var(--sp-sm); }
-.roster__kicker {
-  font-size: 12.5px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
-  opacity: .62;
-}
 .roster__title {
   font-size: clamp(28px, 5.4vw, 56px); font-weight: 800;
   line-height: 1.08; letter-spacing: -1.8px; margin-top: var(--sp-sm);
