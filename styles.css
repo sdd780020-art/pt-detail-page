@@ -1098,6 +1098,7 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .faq__a {
   padding: 0 4px var(--sp-lg); font-size: 14.5px; line-height: 1.7; color: var(--text-sub);
 }
+.faq__link { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
 .cta-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-base); margin-top: var(--sp-2xl); }
 .cta-card {
