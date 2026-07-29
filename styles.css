@@ -438,6 +438,11 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   font-size: clamp(28px, 5.4vw, 56px); font-weight: 800;
   line-height: 1.08; letter-spacing: -1.8px; margin-top: var(--sp-sm);
 }
+.roster__desc {
+  margin-top: var(--sp-md);
+  font-size: clamp(14px, 1.8vw, 16px); font-weight: 700;
+  color: rgba(6, 33, 15, .68); letter-spacing: -.3px;
+}
 .roster__foot { display: flex; justify-content: flex-end; }
 .roster__more {
   display: inline-flex; align-items: center; gap: 7px;
@@ -1106,11 +1111,12 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .cta-card__label { font-size: 13px; font-weight: 700; color: var(--brand); margin-bottom: var(--sp-sm); }
 .cta-card--primary .cta-card__label { color: rgba(6,33,15,.7); }
-.cta-card__price { font-size: 16px; font-weight: 700; margin-bottom: var(--sp-lg); color: var(--text-sub); }
+.cta-card__price { font-size: 16px; font-weight: 700; margin-bottom: var(--sp-sm); color: var(--text-sub); }
 .cta-card__price strong { color: var(--text); font-weight: 800; }
 .cta-card--primary .cta-card__price { color: rgba(6,33,15,.72); }
 .cta-card--primary .cta-card__price strong { color: #06210F; }
 .cta-card__price strong { font-size: 26px; font-weight: 800; }
+.cta-card__note { font-size: 12px; font-weight: 600; margin-bottom: var(--sp-lg); color: rgba(6,33,15,.5); }
 .cta-card--primary .btn--primary { background: #06210F; color: var(--brand); box-shadow: none; }
 .cta-card--primary .btn--primary:hover { opacity: .92; }
 
