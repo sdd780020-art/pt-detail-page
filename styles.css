@@ -727,7 +727,8 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 /* 실제 앱 화면 재현 — 수업 일지 + 출석 정보 */
 .applog__bar { display: flex; align-items: center; gap: var(--sp-sm); padding: 0 4px var(--sp-sm); font-size: 13px; font-weight: 800; color: var(--text); }
 .applog__bar b { flex: 1; text-align: center; letter-spacing: 1px; }
-.applog__banner { height: 62px; border-radius: var(--r-md); overflow: hidden; margin-bottom: var(--sp-md); }
+/* 실제 수업 사진 — 2:1이라야 덤벨·뻗은 팔·상체가 다 들어와 운동 장면으로 읽힘 */
+.applog__banner { aspect-ratio: 2 / 1; border-radius: var(--r-md); overflow: hidden; margin-bottom: var(--sp-md); }
 .applog__banner img { width: 100%; height: 100%; object-fit: cover; }
 .applog__hd { display: flex; align-items: center; justify-content: space-between; padding: 0 2px var(--sp-sm); }
 .applog__hd b { font-size: 14px; font-weight: 800; color: var(--text); }
