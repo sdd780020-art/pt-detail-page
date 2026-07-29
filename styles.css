@@ -732,21 +732,32 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .applog__hd { display: flex; align-items: center; justify-content: space-between; padding: 0 2px var(--sp-sm); }
 .applog__hd b { font-size: 14px; font-weight: 800; color: var(--text); }
 .applog__hd span { font-size: 13px; color: var(--text-caption); letter-spacing: 3px; }
+.applog__date { font-size: 11px !important; letter-spacing: 0 !important; font-weight: 600; }
+/* 카드 공통 헤더 (오늘 한 운동 / 짚어준 포인트 / 트레이너 코멘트) */
+.logcard__hd { font-size: 11.5px; font-weight: 800; color: var(--text-caption); letter-spacing: .2px; margin-bottom: var(--sp-sm); }
+
+/* 오늘 한 운동 — 종목별 중량·횟수·세트 */
+.logcard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--sp-md); margin-bottom: var(--sp-sm); }
+.exset { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-sm); padding: 6px 0; border-top: 1px solid var(--border); }
+.exset:first-of-type { border-top: none; padding-top: 0; }
+.exset__n { font-size: 12px; font-weight: 700; color: var(--text); }
+.exset__v { font-size: 11.5px; color: var(--text-sub); font-weight: 600; white-space: nowrap; }
+.exset__v span { color: var(--brand); font-weight: 800; margin-left: 3px; }
+
 .notecard { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: var(--sp-md); display: grid; gap: 9px; }
+.notecard .logcard__hd { margin-bottom: 1px; }
 .note { display: flex; gap: 7px; font-size: 12px; line-height: 1.5; color: var(--text-sub); }
 .note b { color: var(--text); font-weight: 700; }
 .note__mk { color: #FF6B5C; flex-shrink: 0; font-weight: 800; }
-.attend { margin-top: var(--sp-lg); padding: 0 2px; }
-.attend__hd { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: var(--sp-md); }
-.rings { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-sm); }
-.ring { text-align: center; }
-.ring__c {
-  width: 40px; height: 40px; margin: 0 auto 7px; border-radius: 50%;
-  border: 4px solid var(--brand); background: var(--bg);
-  box-shadow: 0 0 12px rgba(0,216,87,.35);
+
+/* 트레이너 코멘트 — 사람이 남긴 흔적이라 그린 좌측 룰로 구분 */
+.trcomment {
+  margin-top: var(--sp-sm); padding: var(--sp-md);
+  background: var(--brand-soft); border: 1px solid var(--brand-line);
+  border-radius: var(--r-md);
 }
-.ring__l { font-size: 11px; color: var(--text-sub); font-weight: 600; }
-.ring__s { font-size: 11px; color: var(--brand); font-weight: 800; margin-top: 2px; }
+.trcomment__hd { font-size: 11.5px; font-weight: 800; color: var(--brand); margin-bottom: 5px; }
+.trcomment__body { font-size: 12px; line-height: 1.55; color: var(--text-sub); }
 
 /* 변화 대시보드 (추이 차트) */
 .dash {
