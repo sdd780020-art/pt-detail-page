@@ -882,6 +882,30 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   color: var(--text);
 }
 .punch__u { color: var(--brand); }
+
+/* ==========================================================================
+   Cause — 원인. punch(문제)와 4 STEP PT(솔루션) 사이의 논리 다리
+   punch와 같은 배경으로 이어 붙여 한 호흡으로 읽히게 한다
+   ========================================================================== */
+.cause { background: var(--bg-deep); padding-bottom: var(--sp-5xl); }
+.cause__deny {
+  font-size: clamp(16px, 2.4vw, 21px); font-weight: 600;
+  color: var(--text-caption); letter-spacing: -.5px;
+}
+.cause__core {
+  margin-top: var(--sp-md);
+  font-size: clamp(25px, 5.6vw, 48px); font-weight: 800;
+  line-height: 1.24; letter-spacing: -1.8px; color: var(--text);
+}
+.cause__u { color: var(--brand); }
+/* 2차 장벽 — 앞 문단과 성격이 달라 룰로 끊어 읽게 함 */
+.cause__wall {
+  margin-top: var(--sp-3xl); padding-top: var(--sp-2xl);
+  border-top: 1px solid var(--border);
+  font-size: clamp(15.5px, 2.1vw, 19px); font-weight: 600;
+  line-height: 1.75; color: var(--text-sub); letter-spacing: -.5px;
+}
+.cause__wall strong { color: var(--text); font-weight: 800; }
 .js .reveal .punch__t { opacity: 0; transform: translateY(26px) scale(.975); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .js .reveal.is-visible .punch__t { opacity: 1; transform: none; }
 
