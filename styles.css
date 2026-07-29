@@ -1100,6 +1100,28 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .faq__link { color: var(--brand); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
+/* 정찰제 가격표 — 좁은 FAQ 폭에 맞춰 2열로 압축.
+   등급/지점을 한 셀에 쌓고 금액만 우측 정렬해 스캔되게 한다 */
+.ptable {
+  width: 100%; border-collapse: collapse;
+  margin: var(--sp-md) 0 var(--sp-sm);
+  font-size: 13px; font-feature-settings: "tnum" 1;
+}
+.ptable th {
+  text-align: left; padding-bottom: 7px;
+  font-size: 11px; font-weight: 800; letter-spacing: .2px;
+  color: var(--text-caption); border-bottom: 1px solid var(--border);
+}
+.ptable td {
+  padding: 9px 0; border-bottom: 1px solid var(--border); vertical-align: top;
+}
+.ptable tbody tr:last-child td { border-bottom: none; }
+.ptable th:last-child, .ptable td:last-child { text-align: right; white-space: nowrap; }
+.ptable td b { display: block; font-size: 13px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
+.ptable td span { display: block; margin-top: 3px; font-size: 11px; color: var(--text-caption); letter-spacing: -.2px; }
+.ptable td:last-child { color: var(--brand); font-weight: 700; }
+.ptable__note { font-size: 11.5px; line-height: 1.6; color: var(--text-caption); letter-spacing: -.2px; }
+
 .cta-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-base); margin-top: var(--sp-2xl); }
 .cta-card {
   background: var(--surface-2); border: 1px solid var(--border);
