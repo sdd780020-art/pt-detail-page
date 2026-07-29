@@ -898,14 +898,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   line-height: 1.24; letter-spacing: -1.8px; color: var(--text);
 }
 .cause__u { color: var(--brand); }
-/* 2차 장벽 — 앞 문단과 성격이 달라 룰로 끊어 읽게 함 */
-.cause__wall {
-  margin-top: var(--sp-3xl); padding-top: var(--sp-2xl);
-  border-top: 1px solid var(--border);
-  font-size: clamp(15.5px, 2.1vw, 19px); font-weight: 600;
-  line-height: 1.75; color: var(--text-sub); letter-spacing: -.5px;
-}
-.cause__wall strong { color: var(--text); font-weight: 800; }
 .js .reveal .punch__t { opacity: 0; transform: translateY(26px) scale(.975); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
 .js .reveal.is-visible .punch__t { opacity: 1; transform: none; }
 
