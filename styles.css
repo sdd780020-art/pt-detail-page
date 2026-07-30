@@ -1259,13 +1259,42 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
 }
 .lightbox[hidden] { display: none; }
+/* 원본(1180×1528)을 최대한 크게 — 확대 화질이 목적이라 상한을 넉넉히 둡니다 */
 .lightbox__img {
-  max-width: min(100%, 920px); max-height: 76vh;
+  max-width: min(100%, 1100px); max-height: 86vh;
   width: auto; height: auto; object-fit: contain;
   border-radius: var(--r-md);
   box-shadow: 0 30px 90px rgba(0, 0, 0, .65);
 }
+/* 고해상도본 받는 동안 살짝 흐리게 — 깜빡임 대신 부드러운 전환 */
+.lightbox__img { transition: opacity .2s ease; }
+.lightbox.is-loading .lightbox__img { opacity: .45; }
+
+.lightbox__foot { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .lightbox__cap { font-size: 13px; color: var(--text-sub); text-align: center; max-width: 620px; }
+.lightbox__count {
+  font-size: 12px; font-weight: 700; color: var(--text-caption);
+  font-feature-settings: "tnum" 1;
+}
+
+/* 좌우 이동 — 같은 갤러리 안에서 순환 */
+.lightbox__nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 48px; height: 48px; border-radius: var(--r-pill);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, .09); color: var(--text);
+  font-size: 30px; line-height: 1; padding-bottom: 4px;
+  transition: background .2s ease;
+}
+.lightbox__nav:hover { background: rgba(255, 255, 255, .18); }
+.lightbox__nav[hidden] { display: none; }
+.lightbox__nav--prev { left: var(--sp-sm); }
+.lightbox__nav--next { right: var(--sp-sm); }
+@media (min-width: 1024px) {
+  .lightbox__nav { width: 56px; height: 56px; font-size: 34px; }
+  .lightbox__nav--prev { left: var(--sp-xl); }
+  .lightbox__nav--next { right: var(--sp-xl); }
+}
 .lightbox__close {
   position: absolute; top: var(--sp-base); right: var(--sp-base);
   width: 44px; height: 44px; border-radius: var(--r-pill);

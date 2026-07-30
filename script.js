@@ -132,17 +132,69 @@ const lightbox = document.getElementById('lightbox');
 if (lightbox) {
   const lbImg = lightbox.querySelector('.lightbox__img');
   const lbCap = lightbox.querySelector('.lightbox__cap');
+  const lbCount = lightbox.querySelector('.lightbox__count');
   const lbClose = lightbox.querySelector('.lightbox__close');
+  const lbPrev = lightbox.querySelector('.lightbox__nav--prev');
+  const lbNext = lightbox.querySelector('.lightbox__nav--next');
   let lastFocused = null;
+  let group = [];   // 현재 열린 이미지가 속한 갤러리
+  let index = 0;
 
-  const openLb = (img) => {
-    lastFocused = document.activeElement;
-    lbImg.src = img.currentSrc || img.src;
-    lbImg.alt = img.alt || '';
+  const zoomables = Array.from(document.querySelectorAll('[data-zoom]'));
+  // data-gallery로 묶어두면 같은 갤러리 안에서만 좌우로 넘어갑니다
+  const galleries = new Map();
+  zoomables.forEach((img) => {
+    const key = img.dataset.gallery || null;
+    if (!key) return;
+    if (!galleries.has(key)) galleries.set(key, []);
+    galleries.get(key).push(img);
+  });
+
+  const captionOf = (img) => {
     // 갤러리 카드는 이미지 아래 캡션이 따로 있으므로 그걸 우선 사용
     const card = img.closest('.doc, .facility');
     const cap = card && card.querySelector('.doc__cap, .facility__cap');
-    lbCap.textContent = cap ? cap.textContent.trim() : (img.alt || '');
+    return cap ? cap.textContent.trim() : (img.alt || '');
+  };
+
+  // 확대용 고해상도본이 있으면 그걸, 없으면 원본 src를 씁니다
+  const hiResOf = (img) => img.dataset.zoomSrc || img.getAttribute('src');
+
+  const render = () => {
+    const img = group[index];
+    const target = hiResOf(img);
+    // 고해상도본은 용량이 커서 받는 동안 로딩 표시를 둡니다
+    lightbox.classList.add('is-loading');
+    lbImg.src = target;
+    if (lbImg.complete) lightbox.classList.remove('is-loading');
+    lbImg.alt = img.alt || '';
+    lbCap.textContent = captionOf(img);
+    const many = group.length > 1;
+    lbCount.textContent = many ? `${index + 1} / ${group.length}` : '';
+    lbPrev.hidden = !many;
+    lbNext.hidden = !many;
+    // 앞뒤 이미지를 미리 받아두면 넘길 때 끊김이 없습니다
+    if (many) {
+      [-1, 1].forEach((d) => {
+        const n = group[(index + d + group.length) % group.length];
+        const pre = new Image();
+        pre.src = hiResOf(n);
+      });
+    }
+  };
+
+  const step = (d) => {
+    if (group.length < 2) return;
+    index = (index + d + group.length) % group.length;
+    render();
+  };
+
+  const openLb = (img) => {
+    lastFocused = document.activeElement;
+    const key = img.dataset.gallery;
+    group = key && galleries.has(key) ? galleries.get(key) : [img];
+    index = Math.max(0, group.indexOf(img));
+    render();
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';
     lbClose.focus();
@@ -155,7 +207,7 @@ if (lightbox) {
     if (lastFocused && lastFocused.focus) lastFocused.focus();
   };
 
-  document.querySelectorAll('[data-zoom]').forEach((img) => {
+  zoomables.forEach((img) => {
     img.addEventListener('click', () => openLb(img));
     // 키보드로도 열 수 있게
     img.tabIndex = 0;
@@ -165,10 +217,30 @@ if (lightbox) {
     });
   });
 
+  lbImg.addEventListener('load', () => lightbox.classList.remove('is-loading'));
+  lbImg.addEventListener('error', () => lightbox.classList.remove('is-loading'));
+
   lbClose.addEventListener('click', closeLb);
+  lbPrev.addEventListener('click', (e) => { e.stopPropagation(); step(-1); });
+  lbNext.addEventListener('click', (e) => { e.stopPropagation(); step(1); });
   // 이미지 자체를 누른 게 아니면 닫기
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.hidden) closeLb(); });
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+  });
+
+  // 모바일 스와이프로도 넘기기
+  let touchX = null;
+  lightbox.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
+    touchX = null;
+  }, { passive: true });
 }
 
 // ============ 트레이너 마퀴 — 자동 흐름 + 직접 스크롤 ============

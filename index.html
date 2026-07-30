@@ -560,22 +560,22 @@
       <p class="subhead">체험이 끝나면, 이런 설계서를 받습니다.</p>
       <div class="doc-gallery">
         <div class="doc">
-          <div class="figure figure--3-4 figure--doc"><img data-zoom src="assets/img/doc-cover.png" alt="내 몸 변화 설계서 표지" loading="lazy"></div>
+          <div class="figure figure--3-4 figure--doc"><img data-zoom data-gallery="doc" src="assets/img/doc-cover.png" alt="내 몸 변화 설계서 표지" loading="lazy"></div>
           <p class="doc__cap">내 몸 변화 설계서</p>
           <p class="doc__sub">4 STEP PT · 표지</p>
         </div>
         <div class="doc">
-          <div class="figure figure--3-4 figure--doc"><img data-zoom src="assets/img/doc-analysis.png" alt="현재 내 몸 상태 분석 페이지" loading="lazy"></div>
+          <div class="figure figure--3-4 figure--doc"><img data-zoom data-gallery="doc" src="assets/img/doc-analysis.png" alt="현재 내 몸 상태 분석 페이지" loading="lazy"></div>
           <p class="doc__cap">현재 내 몸 상태 분석</p>
           <p class="doc__sub">운동 목적 · 자세/기능 평가 · 수업 일지</p>
         </div>
         <div class="doc">
-          <div class="figure figure--3-4 figure--doc"><img data-zoom src="assets/img/doc-roadmap.png" alt="내 몸 변화 로드맵 페이지" loading="lazy"></div>
+          <div class="figure figure--3-4 figure--doc"><img data-zoom data-gallery="doc" src="assets/img/doc-roadmap.png" alt="내 몸 변화 로드맵 페이지" loading="lazy"></div>
           <p class="doc__cap">내 몸 변화 로드맵</p>
           <p class="doc__sub">Phase 1–3 · 12주 단계별 계획</p>
         </div>
         <div class="doc">
-          <div class="figure figure--3-4 figure--doc"><img data-zoom src="assets/img/doc-comment.png" alt="트레이너의 코멘트 페이지" loading="lazy"></div>
+          <div class="figure figure--3-4 figure--doc"><img data-zoom data-gallery="doc" src="assets/img/doc-comment.png" alt="트레이너의 코멘트 페이지" loading="lazy"></div>
           <p class="doc__cap">트레이너의 코멘트</p>
           <p class="doc__sub">담당 트레이너가 직접 남기는 방향</p>
         </div>
@@ -727,22 +727,22 @@
           <span class="facility__cap">PT 전용 존</span>
           <span class="facility__tag">오롯이 내 수업에만 집중하는 공간</span>
         </div>
-        <div class="figure figure--16-9 figure--photo"><img data-zoom src="assets/img/facility-pt.jpg" alt="버핏그라운드 PT 전용 존 — 넓은 1:1 수업 공간" loading="lazy"></div>
+        <div class="figure figure--16-9 figure--photo"><img data-zoom data-gallery="facility" data-zoom-src="assets/img/facility-pt@2x.jpg" src="assets/img/facility-pt.jpg" alt="버핏그라운드 PT 전용 존 — 넓은 1:1 수업 공간" loading="lazy"></div>
       </div>
     </div>
 
     <div class="reveal">
       <div class="facility-sub">
         <div class="facility facility--sub">
-          <div class="figure figure--1-1 figure--photo"><img data-zoom src="assets/img/facility-lifting.jpg" alt="버핏그라운드 리프팅 존 — 프리웨이트 랙과 원판" loading="lazy"></div>
+          <div class="figure figure--1-1 figure--photo"><img data-zoom data-gallery="facility" data-zoom-src="assets/img/facility-lifting@2x.jpg" src="assets/img/facility-lifting.jpg" alt="버핏그라운드 리프팅 존 — 프리웨이트 랙과 원판" loading="lazy"></div>
           <p class="facility__cap">리프팅 존</p>
         </div>
         <div class="facility facility--sub">
-          <div class="figure figure--1-1 figure--photo"><img data-zoom src="assets/img/facility-machine.jpg" alt="버핏그라운드 머신 존" loading="lazy"></div>
+          <div class="figure figure--1-1 figure--photo"><img data-zoom data-gallery="facility" data-zoom-src="assets/img/facility-machine@2x.jpg" src="assets/img/facility-machine.jpg" alt="버핏그라운드 머신 존" loading="lazy"></div>
           <p class="facility__cap">머신 존</p>
         </div>
         <div class="facility facility--sub">
-          <div class="figure figure--1-1 figure--photo"><img data-zoom src="assets/img/facility-hyrox.jpg" alt="버핏그라운드 하이록스 존 — 트레드밀과 로잉머신" loading="lazy"></div>
+          <div class="figure figure--1-1 figure--photo"><img data-zoom data-gallery="facility" data-zoom-src="assets/img/facility-hyrox@2x.jpg" src="assets/img/facility-hyrox.jpg" alt="버핏그라운드 하이록스 존 — 트레드밀과 로잉머신" loading="lazy"></div>
           <p class="facility__cap">하이록스 존<sup>*</sup></p>
         </div>
       </div>
@@ -858,8 +858,13 @@
 <!-- 이미지 확대 (설계서·시설) -->
 <div class="lightbox" id="lightbox" hidden>
   <button class="lightbox__close" type="button" aria-label="닫기">✕</button>
+  <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="이전 이미지">‹</button>
   <img class="lightbox__img" src="" alt="">
-  <p class="lightbox__cap"></p>
+  <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="다음 이미지">›</button>
+  <div class="lightbox__foot">
+    <p class="lightbox__cap"></p>
+    <p class="lightbox__count" aria-hidden="true"></p>
+  </div>
 </div>
 
 <script src="script.js"></script>
