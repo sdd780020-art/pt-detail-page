@@ -1008,42 +1008,25 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   gap: var(--sp-md); margin-top: var(--sp-2xl);
 }
 .arev {
+  background: transparent; border: none;
+  padding: 0;
+}
+
+/* 말풍선 — 회원이 남긴 후기 본문 */
+.arev__bubble {
+  position: relative;
   background: var(--surface-2); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: var(--sp-lg);
-  transition: border-color .2s ease;
-}
-.arev:hover { border-color: #30303a; }
-
-/* 헤더 — 트레이너 사진 / 이름·지점 / 평점 */
-.arev__hd {
-  display: grid; grid-template-columns: 56px minmax(0,1fr) auto;
-  align-items: center; gap: var(--sp-md);
-  padding-bottom: var(--sp-md); border-bottom: 1px solid var(--border);
-}
-.arev__ava {
-  width: 56px; height: 56px; border-radius: var(--r-pill);
-  overflow: hidden; flex-shrink: 0;
-  background: var(--surface-3); border: 1px solid var(--border);
-}
-.arev__ava img { width: 100%; height: 100%; object-fit: cover; }
-.arev__id { min-width: 0; }
-.arev__name { font-size: 16px; font-weight: 800; color: var(--text); letter-spacing: -.4px; }
-.arev__t { font-size: 12.5px; font-weight: 600; color: var(--text-caption); letter-spacing: -.2px; }
-.arev__role { font-size: 12.5px; font-weight: 700; color: var(--brand); margin-top: 3px; }
-.arev__score { text-align: right; line-height: 1.25; }
-.arev__score b {
-  display: block; font-size: 15px; font-weight: 800; color: var(--text);
-  font-feature-settings: "tnum" 1;
-}
-.arev__score b::before { content: "★ "; color: var(--brand); font-size: .85em; }
-.arev__score span { font-size: 11px; color: var(--text-caption); font-feature-settings: "tnum" 1; }
-
-.arev__body {
-  margin-top: var(--sp-md);
   font-size: 14px; line-height: 1.75; color: var(--text-sub); letter-spacing: -.3px;
 }
+.arev__bubble::after {
+  content: ""; position: absolute; left: 28px; bottom: -9px;
+  width: 18px; height: 18px;
+  background: var(--surface-2); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
 /* 카드마다 하나씩만 — 이 후기가 무슨 얘기인지 3초 안에 잡히게 */
-.arev__body mark {
+.arev__bubble mark {
   background: rgba(0, 216, 87, .12);
   color: var(--text); font-weight: 700;
   padding: 1px 3px; border-radius: 3px;
@@ -1052,12 +1035,21 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 /* 원문에서 문단을 건너뛴 지점 */
 .arev__el { color: var(--text-dim); font-weight: 800; padding: 0 2px; }
 
-.arev__ft {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-md);
-  margin-top: var(--sp-md);
+/* 말풍선 아래 — 후기를 남긴 회원 */
+.arev__who {
+  display: flex; align-items: center; gap: var(--sp-sm);
+  margin-top: var(--sp-lg);
 }
-.arev__stars { color: var(--brand); font-size: 12px; letter-spacing: 1.5px; }
-.arev__by { font-size: 11.5px; color: var(--text-caption); }
+.arev__initial {
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: var(--r-pill);
+  background: var(--surface-3); border: 1px solid var(--border);
+  font-size: 14px; font-weight: 800; color: var(--brand);
+}
+.arev__id { min-width: 0; }
+.arev__name { font-size: 14.5px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
+.arev__stars { color: var(--brand); font-size: 11px; letter-spacing: 1.5px; margin-left: 6px; }
+.arev__sub { font-size: 12px; color: var(--text-caption); margin-top: 2px; }
 
 /* ==========================================================================
    Vision / Promise (brand section)
@@ -1236,8 +1228,7 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .marquee { gap: 12px; }
   .doc { width: 280px; }
   .arevs { grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); }
-  .arev { padding: var(--sp-xl); }
-  .arev__body { font-size: 14.5px; }
+  .arev__bubble { padding: var(--sp-xl); font-size: 14.5px; }
 
   /* 플로팅 CTA — 데스크탑에선 중앙 부유 알약 */
   .float-cta { left: 50%; right: auto; transform: translateX(-50%) translateY(140%); }
