@@ -421,7 +421,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   background: var(--surface-3); border: 1px solid var(--border);
   font-size: 13px; font-weight: 600; color: var(--text-sub);
 }
-.tag--active { background: var(--brand-soft); border-color: var(--brand-line); color: var(--brand); }
 
 /* ==========================================================================
    Trainer roster — 풀블리드 그린 밴드 + 2행 역방향 마퀴
