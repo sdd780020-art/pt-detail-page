@@ -624,8 +624,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   font-size: 13px; font-weight: 800;
 }
 .check__tx { font-size: 15px; font-weight: 600; color: var(--text); padding-top: 1px; }
-/* 클로징 비트의 '방법·기록·기준' 같은 앞머리 라벨 */
-.check__tx b { color: var(--brand); font-weight: 800; }
 
 /* No-sales promise callout (체험 2회, 세일즈 없음) */
 .promise {
@@ -839,16 +837,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   display: flex; flex-direction: column;
   gap: var(--sp-md); margin-top: var(--sp-2xl);
 }
-/* 비트 레이블 — 목소리 묶음 사이에서 '몸의 신호 → 시도했지만 실패'라는 인과를 드러낸다 */
-.voc__beat {
-  align-self: flex-start;
-  margin-top: var(--sp-lg);
-  padding-left: 2px;
-  font-size: 13.5px; font-weight: 700;
-  color: var(--brand); letter-spacing: -.3px;
-}
-.voc__beat:first-child { margin-top: 0; }
-
 .voc__q {
   position: relative;
   align-self: flex-start; max-width: 90%;
