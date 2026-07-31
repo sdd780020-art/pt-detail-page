@@ -600,8 +600,8 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   border: 1px solid var(--border);
   border-radius: var(--r-md);
 }
-.redflag__label { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -.3px; }
-.redflag__desc { font-size: 12.5px; color: var(--text-caption); line-height: 1.65; margin-top: 6px; margin-bottom: var(--sp-md); letter-spacing: -.2px; }
+.redflag__label { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: var(--sp-md); letter-spacing: -.3px; }
+.redflag__note { font-size: 12.5px; color: var(--text-caption); line-height: 1.6; margin-top: var(--sp-md); letter-spacing: -.2px; }
 .redflag__list { display: grid; gap: var(--sp-sm); }
 .redflag__list li {
   display: flex; align-items: flex-start; gap: var(--sp-sm);
