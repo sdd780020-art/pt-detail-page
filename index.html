@@ -866,10 +866,13 @@
 <div class="lightbox" id="lightbox" hidden>
   <button class="lightbox__close" type="button" aria-label="닫기">✕</button>
   <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="이전 이미지">‹</button>
-  <img class="lightbox__img" src="" alt="">
+  <div class="lightbox__stage">
+    <img class="lightbox__img" src="" alt="" draggable="false">
+  </div>
   <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="다음 이미지">›</button>
   <div class="lightbox__foot">
     <p class="lightbox__cap"></p>
+    <p class="lightbox__hint" aria-hidden="true"></p>
     <p class="lightbox__count" aria-hidden="true"></p>
   </div>
 </div>

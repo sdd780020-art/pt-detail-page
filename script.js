@@ -131,6 +131,8 @@ if (gnbToggle && gnb) {
 const lightbox = document.getElementById('lightbox');
 if (lightbox) {
   const lbImg = lightbox.querySelector('.lightbox__img');
+  const lbStage = lightbox.querySelector('.lightbox__stage');
+  const lbHint = lightbox.querySelector('.lightbox__hint');
   const lbCap = lightbox.querySelector('.lightbox__cap');
   const lbCount = lightbox.querySelector('.lightbox__count');
   const lbClose = lightbox.querySelector('.lightbox__close');
@@ -160,9 +162,41 @@ if (lightbox) {
   // 확대용 고해상도본이 있으면 그걸, 없으면 원본 src를 씁니다
   const hiResOf = (img) => img.dataset.zoomSrc || img.getAttribute('src');
 
+  // --- 확대해서 읽기 (데스크탑 전용) ---------------------------------------
+  // 설계서는 A4 한 장이라 화면에 맞추면 잔글씨가 안 읽힙니다.
+  // 마우스가 있는 환경에선 클릭으로 원본 크기까지 키우고 드래그로 훑어볼 수 있게 합니다.
+  // 모바일은 핀치 줌이 이미 되므로 그대로 둡니다.
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  let zoomed = false;
+
+  const zoomWidth = () => Math.min(lbImg.naturalWidth, Math.max(window.innerWidth * 0.92, 1100));
+  // 화면에 맞춘 크기보다 확실히 커질 때만 확대를 제공합니다
+  const canZoom = () => finePointer && lbImg.naturalWidth > lbImg.getBoundingClientRect().width + 40;
+
+  const syncHint = () => {
+    lightbox.classList.toggle('is-zoomable', !zoomed && canZoom());
+    lbHint.textContent = zoomed ? '드래그해서 이동 · 클릭하면 원래 크기'
+      : (canZoom() ? '클릭하면 확대됩니다' : '');
+  };
+
+  // origin: 확대 기준점(클릭 위치). 그 지점이 화면 중앙에 오도록 스크롤합니다.
+  const setZoom = (on, origin) => {
+    zoomed = !!on && finePointer;
+    lightbox.classList.toggle('is-zoomed', zoomed);
+    if (zoomed) {
+      lightbox.style.setProperty('--lb-zoom-w', zoomWidth() + 'px');
+      const rx = origin ? origin.rx : 0.5;
+      const ry = origin ? origin.ry : 0;
+      lbStage.scrollLeft = rx * lbStage.scrollWidth - lbStage.clientWidth / 2;
+      lbStage.scrollTop = ry * lbStage.scrollHeight - lbStage.clientHeight / 2;
+    }
+    syncHint();
+  };
+
   const render = () => {
     const img = group[index];
     const target = hiResOf(img);
+    setZoom(false);
     // 고해상도본은 용량이 커서 받는 동안 로딩 표시를 둡니다
     lightbox.classList.add('is-loading');
     lbImg.src = target;
@@ -197,10 +231,12 @@ if (lightbox) {
     render();
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';
+    syncHint();   // 표시된 뒤라야 실제 크기를 잴 수 있습니다
     lbClose.focus();
   };
 
   const closeLb = () => {
+    setZoom(false);
     lightbox.hidden = true;
     lbImg.src = '';
     document.body.style.overflow = '';
@@ -217,17 +253,58 @@ if (lightbox) {
     });
   });
 
-  lbImg.addEventListener('load', () => lightbox.classList.remove('is-loading'));
+  lbImg.addEventListener('load', () => { lightbox.classList.remove('is-loading'); syncHint(); });
   lbImg.addEventListener('error', () => lightbox.classList.remove('is-loading'));
+  window.addEventListener('resize', () => { if (!lightbox.hidden) setZoom(false); });
+
+  // 이미지를 누르면 확대/축소 — 단, 끌어서 훑은 경우는 제외합니다
+  let drag = null;
+  let dragMoved = 0;   // 직전 드래그 이동량 — 끌어서 훑은 뒤의 click을 걸러냅니다
+  lbImg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (dragMoved > 6) { dragMoved = 0; return; }
+    if (zoomed) { setZoom(false); return; }
+    if (!canZoom()) return;
+    const r = lbImg.getBoundingClientRect();
+    setZoom(true, { rx: (e.clientX - r.left) / r.width, ry: (e.clientY - r.top) / r.height });
+  });
+
+  lbStage.addEventListener('pointerdown', (e) => {
+    dragMoved = 0;   // 새 누름이 시작되면 직전 값은 버립니다
+    if (!zoomed || e.button !== 0) return;
+    drag = { x: e.clientX, y: e.clientY, l: lbStage.scrollLeft, t: lbStage.scrollTop };
+    lightbox.classList.add('is-panning');
+    lbStage.setPointerCapture(e.pointerId);
+  });
+  lbStage.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    dragMoved = Math.max(dragMoved, Math.abs(dx) + Math.abs(dy));
+    lbStage.scrollLeft = drag.l - dx;
+    lbStage.scrollTop = drag.t - dy;
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    lightbox.classList.remove('is-panning');
+    drag = null;
+  };
+  lbStage.addEventListener('pointerup', endDrag);
+  lbStage.addEventListener('pointercancel', endDrag);
 
   lbClose.addEventListener('click', closeLb);
   lbPrev.addEventListener('click', (e) => { e.stopPropagation(); step(-1); });
   lbNext.addEventListener('click', (e) => { e.stopPropagation(); step(1); });
-  // 이미지 자체를 누른 게 아니면 닫기
-  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
+  // 이미지 바깥(여백)을 누르면 — 확대 중이면 원래 크기로, 아니면 닫기
+  // 드래그 중에는 포인터 캡처 때문에 뗄 때의 click도 여기로 오므로 같이 걸러냅니다
+  lightbox.addEventListener('click', (e) => {
+    if (e.target !== lightbox && e.target !== lbStage) return;
+    if (dragMoved > 6) { dragMoved = 0; return; }
+    if (zoomed) setZoom(false); else closeLb();
+  });
   document.addEventListener('keydown', (e) => {
     if (lightbox.hidden) return;
-    if (e.key === 'Escape') closeLb();
+    if (e.key === 'Escape') { if (zoomed) setZoom(false); else closeLb(); }
+    else if (zoomed) return;   // 확대 중엔 좌우 키를 스크롤에 양보
     else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
     else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
   });
@@ -236,7 +313,7 @@ if (lightbox) {
   let touchX = null;
   lightbox.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
   lightbox.addEventListener('touchend', (e) => {
-    if (touchX === null) return;
+    if (touchX === null || zoomed) { touchX = null; return; }
     const dx = e.changedTouches[0].clientX - touchX;
     if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
     touchX = null;
