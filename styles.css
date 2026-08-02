@@ -639,7 +639,7 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .promise__desc { font-size: 15px; color: var(--text-sub); line-height: 1.7; }
 
 /* ==========================================================================
-   Doc gallery (🆕 내몸변화설계서 실물)
+   Doc gallery (🆕 내 몸 변화 설계서 실물)
    ========================================================================== */
 .doc-gallery {
   display: flex; gap: var(--sp-base);
