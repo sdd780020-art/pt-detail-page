@@ -396,13 +396,11 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   background: rgba(255, 255, 255, .15);
   color: rgba(255, 255, 255, .94);
 }
+/* 구성 3종은 동일 위계 — 좁은 폭에서는 body의 word-break:keep-all 덕에 어절 단위로 접힌다 */
 .hero__offer-body {
   font-size: 15px; font-weight: 700; line-height: 1.4; letter-spacing: -.4px;
   color: #FFFFFF;
-}
-.hero__offer-extra {
-  font-size: 11.5px; font-weight: 600; line-height: 1.4; letter-spacing: -.3px;
-  color: rgba(255, 255, 255, .62);
+  white-space: normal;
 }
 /* 가격 — 할인율 / 판매가 / 정가(취소선) 순으로 나란히 */
 .hero__offer-price { gap: 2px 9px; margin-top: 1px; font-feature-settings: "tnum" 1; }
@@ -1342,7 +1340,6 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
     padding: 8px var(--sp-lg) 8px 10px;
     border-radius: var(--r-pill);
   }
-  .hero__offer-extra { font-size: 13px; }
   .hero__offer-price .now { font-size: 24px; }
   .hero__offer-price .was { font-size: 13px; }
 
