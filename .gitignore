@@ -19,3 +19,7 @@ PT수업수_리포트_트레이너회원_상위50.html
 Teambutfit3.0 Landing Page (1).html
 # 원본 에셋 (미압축 원본 — 웹용 최적화본은 assets/img/에 커밋)
 각종 에셋/
+
+# 로컬 작업 도구 (렌더 검증용 — 배포와 무관)
+node_modules/
+_*.mjs

@@ -39,30 +39,14 @@ const countObserver = new IntersectionObserver((entries) => {
 countTargets.forEach((el) => countObserver.observe(el));
 
 // ============ 플로팅 CTA ============
-// 기본 노출, 히어로가 보이는 첫 화면과 최종 CTA 섹션에서는 숨김(중복 방지)
+// 첫 화면부터 상시 노출(CSS 기본값). 최종 CTA 섹션에서만 숨겨 버튼 중복을 피한다.
 const floatCta = document.getElementById('floatCta');
-const heroSection = document.querySelector('.hero');
 const ctaSection = document.getElementById('cta');
 
-if (floatCta) {
-  let heroVisible = true;
-  let ctaVisible = false;
-  const sync = () => floatCta.classList.toggle('is-visible', !heroVisible && !ctaVisible);
-
-  if (heroSection) {
-    new IntersectionObserver((entries) => {
-      entries.forEach((e) => { heroVisible = e.isIntersecting; sync(); });
-    }, { threshold: 0.35 }).observe(heroSection);
-  } else {
-    heroVisible = false;
-  }
-
-  if (ctaSection) {
-    new IntersectionObserver((entries) => {
-      entries.forEach((e) => { ctaVisible = e.isIntersecting; sync(); });
-    }, { threshold: 0.25 }).observe(ctaSection);
-  }
-  sync();
+if (floatCta && ctaSection) {
+  new IntersectionObserver((entries) => {
+    entries.forEach((e) => floatCta.classList.toggle('is-hidden', e.isIntersecting));
+  }, { threshold: 0.25 }).observe(ctaSection);
 }
 
 // ============ LNB 스크롤 스파이 ============

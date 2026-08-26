@@ -39,6 +39,10 @@
 
   /* Section rhythm */
   --sec-y: 88px;
+
+  /* 플로팅 CTA가 점유하는 하단 밴드 (버튼 52 + bottom 16 + 여유 16) */
+  --float-h: 84px;
+  --float-safe: calc(var(--float-h) + env(safe-area-inset-bottom, 0px));
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -311,12 +315,15 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
    Hero
    ========================================================================== */
 .hero {
+  /* sticky 헤더 60 + LNB 51 — 이만큼이 히어로 위 flow를 차지하므로 빼줘야 첫 화면에 다 들어온다 */
+  --hero-chrome: 111px;
   position: relative;
-  min-height: 92vh;
+  min-height: 72vh;                                /* svh 미지원(iOS<15.4) 폴백 */
+  min-height: calc(100svh - var(--hero-chrome));
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   text-align: center;
-  padding: 96px var(--sp-lg) var(--sp-4xl);
+  padding: var(--sp-2xl) var(--sp-lg) calc(var(--float-safe) + 76px);
   overflow: hidden;
 }
 .hero__bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
@@ -330,41 +337,83 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 }
 .hero__text { position: relative; z-index: 1; max-width: 920px; }
 /* 히어로 로드 시퀀스 — 요소별 순차 등장 */
-.hero__text > * { opacity: 0; animation: fadeUp .8s cubic-bezier(.16,1,.3,1) forwards; }
-.hero__text > *:nth-child(1) { animation-delay: .08s; }
-.hero__text > *:nth-child(2) { animation-delay: .2s; }
-.hero__text > *:nth-child(3) { animation-delay: .32s; }
-.hero__text > *:nth-child(4) { animation-delay: .46s; }
+.hero__text > * { opacity: 0; animation: fadeUp .6s cubic-bezier(.16,1,.3,1) forwards; }
+.hero__text > *:nth-child(1) { animation-delay: .06s; }  /* kicker */
+.hero__text > *:nth-child(2) { animation-delay: .16s; }  /* title  */
+.hero__text > *:nth-child(3) { animation-delay: .26s; }  /* sub    */
+.hero__text > *:nth-child(4) { animation-delay: .36s; }  /* offer  */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
 .hero__eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: 3px; color: rgba(255,255,255,.72); text-transform: uppercase; margin-bottom: var(--sp-lg); }
-.hero__kicker { font-size: clamp(15px, 2vw, 19px); font-weight: 600; color: var(--brand); margin-bottom: var(--sp-md); letter-spacing: -0.3px; }
+.hero__kicker { font-size: clamp(15px, 2vw, 19px); font-weight: 600; color: var(--brand); line-height: 1.5; margin-bottom: var(--sp-sm); letter-spacing: -0.3px; }
 .hero__title {
-  font-size: clamp(40px, 7.5vw, 82px); font-weight: 800; line-height: 1.06; letter-spacing: -2.5px;
+  /* 하한 36px — 360px 단말에서 "진짜 나를 위한 수업,"이 3줄로 터지던 문제 해결 */
+  font-size: clamp(36px, 7.5vw, 82px); font-weight: 800; line-height: 1.06; letter-spacing: -2.5px;
   color: #FFFFFF;
 }
 .hero__title strong { color: var(--brand); font-weight: 800; }
-.hero__sub { margin-top: var(--sp-xl); font-size: clamp(16px, 2vw, 19px); color: rgba(255,255,255,.82); line-height: 1.65; }
+.hero__sub { margin-top: var(--sp-base); font-size: clamp(16px, 2vw, 19px); color: rgba(255,255,255,.82); line-height: 1.55; }
+
+/* 히어로 오퍼 뱃지 — 40자 한글이라 한 줄 pill 불가. 라벨/본문/가격 3단 (모바일 카드형 / PC 알약형) */
+.hero__offer {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 5px;
+  max-width: 340px; margin: var(--sp-base) auto 0;
+  padding: 10px var(--sp-base) 12px;
+  border-radius: var(--r-2xl);
+  background: rgba(13, 13, 14, .58);
+  border: 1px solid var(--brand-line);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .38);
+  text-align: center;
+}
+.hero__offer-tag {
+  padding: 3px 10px; border-radius: var(--r-pill);
+  background: var(--brand); color: #06210F;
+  font-size: 11.5px; font-weight: 800; line-height: 1.5; letter-spacing: -.2px;
+}
+.hero__offer-body {
+  font-size: 13.5px; font-weight: 600; line-height: 1.45; letter-spacing: -.4px;
+  color: rgba(255, 255, 255, .88);
+}
+.hero__offer-price {
+  display: inline-flex; align-items: baseline; gap: 3px;
+  font-size: 21px; font-weight: 800; line-height: 1.2; letter-spacing: -1px;
+  color: var(--brand);
+  font-feature-settings: "tnum" 1;
+}
+.hero__offer-price .eq  { color: rgba(255,255,255,.4); font-size: 15px; font-weight: 700; margin-right: 2px; }
+.hero__offer-price .won { font-size: 14.5px; font-weight: 700; }
 
 /* 스크롤 유도 인디케이터 (셰브런 3단 펄스) */
 .hero__scroll {
-  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 1;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  position: absolute;
+  bottom: calc(var(--float-safe) + var(--sp-base));  /* 상시 노출되는 플로팅 CTA 바로 위 */
+  left: 50%; transform: translateX(-50%); z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  pointer-events: none;                              /* CTA 근처 탭을 가로채지 않게 */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.55));    /* 사진 위 대비 확보 */
 }
 .hero__scroll i {
-  width: 13px; height: 13px;
-  border-right: 2px solid rgba(255,255,255,.55);
-  border-bottom: 2px solid rgba(255,255,255,.55);
+  width: 12px; height: 12px;
+  border-right: 2.5px solid rgba(255,255,255,.92);
+  border-bottom: 2.5px solid rgba(255,255,255,.92);
   transform: rotate(45deg);
   animation: chev 1.6s ease-in-out infinite;
 }
 .hero__scroll i:nth-child(2) { animation-delay: .15s; }
 .hero__scroll i:nth-child(3) { animation-delay: .3s; }
 @keyframes chev {
-  0%, 100% { opacity: .15; transform: rotate(45deg) translate(0, 0); }
-  50%      { opacity: .9;  transform: rotate(45deg) translate(3px, 3px); }
+  0%, 100% { opacity: .35; transform: rotate(45deg) translate(0, 0); }
+  50%      { opacity: 1;   transform: rotate(45deg) translate(3px, 3px); }
+}
+
+/* iPhone SE 등 세로 아주 짧은 단말에서만 감성 서브카피를 접어 오퍼+CTA를 첫 화면에 보장.
+   주소창 펼친 iPhone 14(svh 659)·갤럭시(640)는 서브카피를 유지할 여유가 있어 제외 */
+@media (max-height: 600px) {
+  .hero { padding-top: var(--sp-base); padding-bottom: calc(var(--float-safe) + 56px); }
+  .hero__sub { display: none; }
 }
 
 /* ==========================================================================
@@ -1122,16 +1171,16 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 .cta-card--primary .btn--primary { background: #06210F; color: var(--brand); box-shadow: none; }
 .cta-card--primary .btn--primary:hover { opacity: .92; }
 
-/* 플로팅 CTA (스크롤 중 상시 노출 · 중앙 부유) */
+/* 플로팅 CTA — 첫 페인트부터 상시 노출. 최종 CTA 섹션에서만 is-hidden으로 접는다.
+   기본값을 '노출'로 둬야 script.js 로드 전/실패 시에도 CTA가 보인다. */
 .float-cta {
   position: fixed; left: 12px; right: 12px; bottom: 16px; z-index: 200;
   display: flex; gap: var(--sp-sm); justify-content: center;
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  transform: translateY(140%); opacity: 0;
+  transform: translateY(0); opacity: 1; pointer-events: auto;
   transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .35s ease;
-  pointer-events: none;
 }
-.float-cta.is-visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
+.float-cta.is-hidden { transform: translateY(140%); opacity: 0; pointer-events: none; }
 .float-cta .btn {
   height: 52px; font-size: 15px; flex: 1; box-shadow: 0 12px 40px rgba(0,0,0,.5);
 }
@@ -1143,7 +1192,7 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
 /* ==========================================================================
    Footer
    ========================================================================== */
-.footer { padding: var(--sp-4xl) 0 110px; background: var(--bg-deep); border-top: 1px solid var(--border); }
+.footer { padding: var(--sp-4xl) 0 calc(var(--float-safe) + var(--sp-3xl)); background: var(--bg-deep); border-top: 1px solid var(--border); }
 .footer__logo { font-size: 16px; font-weight: 800; margin-bottom: var(--sp-md); color: var(--text); }
 .footer__logo span { color: var(--brand); }
 .footer__logo img { height: 15px; width: auto; display: block; }
@@ -1179,7 +1228,8 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .js .reveal .step, .js .reveal .pf, .js .reveal .vet__step { opacity: 1; transform: none; transition: none; }
   .hero__text > * { animation: none; opacity: 1; }
   .hero__bg img { animation: none; }
-  .hero__scroll i { animation: none; opacity: .5; }
+  .hero__scroll i { animation: none; opacity: 1; }
+  .float-cta { transition: none; }
   html { scroll-behavior: auto; }
 }
 
@@ -1242,9 +1292,24 @@ section[id] { scroll-margin-top: 118px; } /* 스티키 헤더(60) + LNB(49) + �
   .arev__body { font-size: 14.5px; }
 
   /* 플로팅 CTA — 데스크탑에선 중앙 부유 알약 */
-  .float-cta { left: 50%; right: auto; transform: translateX(-50%) translateY(140%); }
-  .float-cta.is-visible { transform: translateX(-50%) translateY(0); }
+  .float-cta { left: 50%; right: auto; transform: translateX(-50%); }
+  .float-cta.is-hidden { transform: translateX(-50%) translateY(140%); }
   .float-cta .btn { flex: 0 0 auto; min-width: 190px; }
+
+  /* 히어로 — PC는 주소창 이슈가 없어 vh 그대로, 오퍼는 한 줄 알약으로 */
+  .hero {
+    --hero-chrome: 129px;                  /* 헤더 72 + LNB 57 */
+    min-height: calc(100vh - var(--hero-chrome));
+    padding: var(--sp-4xl) var(--sp-lg) var(--sp-5xl);
+  }
+  .hero__offer {
+    flex-direction: row; align-items: center; gap: var(--sp-md);
+    max-width: none; padding: 9px var(--sp-lg) 9px 10px;
+    border-radius: var(--r-pill);
+  }
+  .hero__offer-body { font-size: 15px; }
+  .hero__offer-price { font-size: 24px; }
+  .hero__scroll { bottom: calc(var(--float-safe) + var(--sp-xl)); }
 
   .center-wrap { max-width: var(--content-narrow); margin-inline: auto; }
 }
